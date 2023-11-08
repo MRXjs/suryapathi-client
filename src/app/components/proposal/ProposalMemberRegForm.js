@@ -99,19 +99,50 @@ const ProposalMemberRegForm = () => {
               </div>
               <div className="mt-8">
                 <span>උපන් දිනය</span>
-                <input
-                  type="date"
-                  id="birthDay"
-                  name="birthDay"
-                  {...register("birthDay", {
-                    required: formValidations.birthDay.required.message,
-                    validate: (fieldValue) => isOlderThan16(fieldValue),
-                  })}
-                  placeholder="උපන් දිනය"
-                  className="w-full px-4 py-2 mt-2 rounded-md outline-none ring-1 ring-gray-300 focus:ring-2 focus:ring-teal-300"
-                />
-                {errors.birthDay ? (
-                  <FormError error={errors.birthDay.message} />
+                <div className="grid grid-cols-3 gap-2">
+                  <input
+                    type="text"
+                    id="birthYear"
+                    name="birthYear"
+                    {...register("birthYear", {
+                      required: formValidations.birthDay.required.yearMessage,
+                      validate: (fieldValue) => isOlderThan16(fieldValue),
+                    })}
+                    placeholder="අවුරුද්ද"
+                    className="w-full px-4 py-2 mt-2 rounded-md outline-none ring-1 ring-gray-300 focus:ring-2 focus:ring-teal-300"
+                  />
+                  <input
+                    type="text"
+                    id="birthMonth"
+                    name="birthMonth"
+                    {...register("birthMonth", {
+                      required: formValidations.birthDay.required.monthMessage,
+                    })}
+                    placeholder="මාසය"
+                    className="w-full px-4 py-2 mt-2 rounded-md outline-none ring-1 ring-gray-300 focus:ring-2 focus:ring-teal-300"
+                  />
+                  <input
+                    type="text"
+                    id="birthDay"
+                    name="birthDay"
+                    {...register("birthDay", {
+                      required: formValidations.birthDay.required.dayMessage,
+                    })}
+                    placeholder="දිනය"
+                    className="w-full px-4 py-2 mt-2 rounded-md outline-none ring-1 ring-gray-300 focus:ring-2 focus:ring-teal-300"
+                  />
+                </div>
+                {errors.birthYear ? (
+                  <FormError error={errors.birthYear.message} />
+                ) : null}
+                {errors.birthMonth || errors.birthDay ? (
+                  <FormError
+                    error={
+                      errors.birthMonth
+                        ? errors.birthMonth.message
+                        : errors.birthDay.message
+                    }
+                  />
                 ) : null}
               </div>
               <div className="mt-8">

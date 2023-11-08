@@ -11,8 +11,12 @@ export const proposalCreate = async (data) => {
     "image",
     await dataURItoFile(localStorage.getItem("avatar"), `${data.name}.jpg`)
   );
+
   formData.append("full_name", data.name);
-  formData.append("birthday", data.birthDay);
+  formData.append(
+    "birthday",
+    `${data.birthYear}-${data.birthMonth}-${data.birthDay}`
+  );
   formData.append("phone", data.phoneNo);
   formData.append("nic", data.nicNo);
   formData.append("feet", data.heightFeet);
@@ -32,10 +36,8 @@ export const proposalCreate = async (data) => {
         "Content-Type": "multipart/form-data",
       },
     });
-    console.log(resp);
-    toastSuccess("ලියාපදිචී වීම සර්තකයී 👌");
+    toastSuccess(resp.data.message);
   } catch (error) {
-    console.log();
     toastError(error.response ? error.response.data.error : error.message);
   }
 };

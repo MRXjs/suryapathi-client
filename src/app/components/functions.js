@@ -18,10 +18,9 @@ export const getStoreValue = (key, objKey) => {
   }
 };
 
-export const isOlderThan16 = (birthdate) => {
-  const birthDate = new Date(birthdate);
-  const currentDate = new Date();
-  const age = currentDate.getFullYear() - birthDate.getFullYear();
+export const isOlderThan16 = (birthYear) => {
+  const currentYear = new Date().getFullYear();
+  const age = currentYear - birthYear;
   if (age > 16) {
     return null;
   } else {

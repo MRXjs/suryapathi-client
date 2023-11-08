@@ -55,8 +55,8 @@ const page = () => {
 
       <div className="flex justify-center w-screen mb-10">
         <RedirectToAstroService
-          btnText={"ඔබගෙ දරුවාගෙ කෙන්දර පත නිවැරදිව සකස්කරදීමට අවශ්‍ය නම්"}
-          serviceIndex={0}
+          btnText={"බට පොරොන්දන් ගැලපිමට අවශ්‍ය නම්."}
+          serviceIndex={1}
         />
       </div>
       <Footer />
