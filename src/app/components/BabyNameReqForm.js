@@ -30,12 +30,26 @@ const BabyNameReqForm = () => {
           <form className="p-5 mt-10 " onSubmit={formHandler}>
             <div className="mt-5">
               <span>උපන් දිනය</span>
-              <input
-                id="dob"
-                type="date"
-                placeholder="උපන් දිනය"
-                className="w-full px-2 py-1 border border-gray-400"
-              />
+              <div className="grid grid-cols-3 gap-3">
+                <input
+                  id="dob"
+                  type="number"
+                  placeholder="අවුරුද්ද"
+                  className="w-full px-4 py-2 mt-2 rounded-md outline-none ring-1 ring-gray-300 focus:ring-2 focus:ring-teal-300"
+                />
+                <input
+                  id="dob"
+                  type="number"
+                  placeholder="මාසය"
+                  className="w-full px-4 py-2 mt-2 rounded-md outline-none ring-1 ring-gray-300 focus:ring-2 focus:ring-teal-300"
+                />
+                <input
+                  id="dob"
+                  type="number"
+                  placeholder="දිනය"
+                  className="w-full px-4 py-2 mt-2 rounded-md outline-none ring-1 ring-gray-300 focus:ring-2 focus:ring-teal-300"
+                />
+              </div>
             </div>
             <div className="mt-5">
               <span>උපන් වෙලාව</span>
@@ -43,19 +57,19 @@ const BabyNameReqForm = () => {
                 step="2"
                 type="time"
                 id="birthTime"
-                className="w-full px-2 py-1 border border-gray-400"
+                className="w-full px-4 py-2 mt-2 rounded-md outline-none ring-1 ring-gray-300 focus:ring-2 focus:ring-teal-300"
               />
             </div>
             <div className="mt-5">
               <span>උපන් ස්තානය</span>
               <input
                 type="text"
-                className="w-full px-2 py-1 border border-gray-400"
+                className="w-full px-4 py-2 mt-2 rounded-md outline-none ring-1 ring-gray-300 focus:ring-2 focus:ring-teal-300"
               />
             </div>
             <div className="mt-5">
               <span>ස්ත්‍රී/ පුරුශ බව</span>
-              <select className="w-full px-2 py-1 border border-gray-400">
+              <select className="w-full px-4 py-2 mt-2 rounded-md outline-none ring-1 ring-gray-300 focus:ring-2 focus:ring-teal-300">
                 <option>ස්ත්‍රී</option>
                 <option>පුරුශ</option>
               </select>
@@ -64,12 +78,12 @@ const BabyNameReqForm = () => {
               <span>ආසන්න නගරය</span>
               <input
                 type="text"
-                className="w-full px-2 py-1 border border-gray-400"
+                className="w-full px-4 py-2 mt-2 rounded-md outline-none ring-1 ring-gray-300 focus:ring-2 focus:ring-teal-300"
               />
             </div>
             <div className="mt-5">
               <span>බලාපොරොත්තු වන නම්</span>
-              <select className="w-full px-2 py-1 border border-gray-400">
+              <select className="w-full px-4 py-2 mt-2 rounded-md outline-none ring-1 ring-gray-300 focus:ring-2 focus:ring-teal-300">
                 <option>දේශීය සින්හල නම්</option>
                 <option>බටහිර නම්</option>
                 <option>දේශීය විදේශිය නම්</option>
@@ -91,21 +105,21 @@ const BabyNameReqForm = () => {
               <input
                 type="tel"
                 placeholder="දුරකතන අංකය"
-                className="w-full px-2 py-1 border border-gray-400"
+                className="w-full px-4 py-2 mt-2 rounded-md outline-none ring-1 ring-gray-300 focus:ring-2 focus:ring-teal-300"
               />
             </div>
             <div className="mt-5">
               <span>ඔබගෙ නම</span>
               <input
                 type="text"
-                className="w-full px-2 py-1 border border-gray-400"
+                className="w-full px-4 py-2 mt-2 rounded-md outline-none ring-1 ring-gray-300 focus:ring-2 focus:ring-teal-300"
               />
             </div>
             <div className="mt-5">
               <span>ගෙවිම් ක්‍රමය</span>
               <select
                 id="paymentMethod"
-                className="w-full px-2 py-1 border border-gray-400"
+                className="w-full px-4 py-2 mt-2 rounded-md outline-none ring-1 ring-gray-300 focus:ring-2 focus:ring-teal-300"
               >
                 <option>Online</option>
                 <option>Bank Transfer</option>

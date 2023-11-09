@@ -101,7 +101,7 @@ const ProposalMemberRegForm = () => {
                 <span>උපන් දිනය</span>
                 <div className="grid grid-cols-3 gap-2">
                   <input
-                    type="text"
+                    type="number"
                     id="birthYear"
                     name="birthYear"
                     {...register("birthYear", {
@@ -112,7 +112,7 @@ const ProposalMemberRegForm = () => {
                     className="w-full px-4 py-2 mt-2 rounded-md outline-none ring-1 ring-gray-300 focus:ring-2 focus:ring-teal-300"
                   />
                   <input
-                    type="text"
+                    type="number"
                     id="birthMonth"
                     name="birthMonth"
                     {...register("birthMonth", {
@@ -122,7 +122,7 @@ const ProposalMemberRegForm = () => {
                     className="w-full px-4 py-2 mt-2 rounded-md outline-none ring-1 ring-gray-300 focus:ring-2 focus:ring-teal-300"
                   />
                   <input
-                    type="text"
+                    type="number"
                     id="birthDay"
                     name="birthDay"
                     {...register("birthDay", {
