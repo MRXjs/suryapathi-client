@@ -153,7 +153,7 @@ const ProposalMemberRegForm = () => {
                     id="heightFeet"
                     name="heightFeet"
                     {...register("heightFeet", {
-                      required: formValidations.heightFeet.required.message,
+                      // required: formValidations.heightFeet.required.message,
                     })}
                     placeholder="අඩි"
                     className="w-full px-4 py-2 mt-2 rounded-md outline-none ring-1 ring-gray-300 focus:ring-2 focus:ring-teal-300 "
@@ -198,7 +198,7 @@ const ProposalMemberRegForm = () => {
                   id="nicNo"
                   name="nicNo"
                   {...register("nicNo", {
-                    required: formValidations.nicNo.required.message,
+                    // required: formValidations.nicNo.required.message,
                     pattern: {
                       value: formValidations.nicNo.pattern.stringPattern,
                       message: formValidations.nicNo.pattern.message,
@@ -216,7 +216,7 @@ const ProposalMemberRegForm = () => {
                   id="phoneNo"
                   name="phoneNo"
                   {...register("phoneNo", {
-                    required: formValidations.phoneNo.required.message,
+                    // required: formValidations.phoneNo.required.message,
                     pattern: {
                       value: formValidations.phoneNo.pattern.stringPattern,
                       message: formValidations.phoneNo.pattern.message,
@@ -234,9 +234,9 @@ const ProposalMemberRegForm = () => {
                   id="nation"
                   name="nation"
                   {...register("nation", {
-                    validate: (fieldValue) => {
-                      return fieldValue !== "0" || "ජාතිය";
-                    },
+                    // validate: (fieldValue) => {
+                    //   return fieldValue !== "0" || "ජාතිය";
+                    // },
                   })}
                   className="w-full px-4 py-2 mt-2 rounded-md outline-none ring-1 ring-gray-300 focus:ring-2 focus:ring-teal-300"
                 >
@@ -251,9 +251,9 @@ const ProposalMemberRegForm = () => {
                   id="religion"
                   name="religion"
                   {...register("religion", {
-                    validate: (fieldValue) => {
-                      return fieldValue !== "0" || "ආගම";
-                    },
+                    // validate: (fieldValue) => {
+                    //   return fieldValue !== "0" || "ආගම";
+                    // },
                   })}
                   className="w-full px-4 py-2 mt-2 rounded-md outline-none ring-1 ring-gray-300 focus:ring-2 focus:ring-teal-300"
                 >
@@ -268,9 +268,9 @@ const ProposalMemberRegForm = () => {
                   id="caste"
                   name="caste"
                   {...register("caste", {
-                    validate: (fieldValue) => {
-                      return fieldValue !== "0" || "කුලය";
-                    },
+                    // validate: (fieldValue) => {
+                    //   return fieldValue !== "0" || "කුලය";
+                    // },
                   })}
                   className="w-full px-4 py-2 mt-2 rounded-md outline-none ring-1 ring-gray-300 focus:ring-2 focus:ring-teal-300"
                 >
@@ -315,7 +315,7 @@ const ProposalMemberRegForm = () => {
                   id="address"
                   name="address"
                   {...register("address", {
-                    required: formValidations.address.required.message,
+                    // required: formValidations.address.required.message,
                   })}
                   placeholder="ස්තීර ලිපිනය"
                   className="w-full px-4 py-2 mt-2 rounded-md outline-none ring-1 ring-gray-300 focus:ring-2 focus:ring-teal-300"
@@ -372,9 +372,9 @@ const ProposalMemberRegForm = () => {
                   id="monthlyIncome"
                   name="monthlyIncome"
                   {...register("monthlyIncome", {
-                    validate: (fieldValue) => {
-                      return fieldValue !== "0" || " මාසික ආදායම ";
-                    },
+                    // validate: (fieldValue) => {
+                    //   return fieldValue !== "0" || " මාසික ආදායම ";
+                    // },
                   })}
                   className="w-full px-4 py-2 mt-2 rounded-md outline-none ring-1 ring-gray-300 focus:ring-2 focus:ring-teal-300"
                 >
