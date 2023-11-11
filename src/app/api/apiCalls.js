@@ -29,9 +29,10 @@ export const proposalCreate = async (data) => {
   formData.append("district", data.district);
   formData.append("job", data.profession);
   formData.append("salary", data.monthlyIncome);
+  formData.append("gender", data.gender);
 
   try {
-    const resp = await axios.post(`${apiURL}/proposal/create`, formData, {
+    const resp = await axios.post(`${apiURL}/member/create`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
