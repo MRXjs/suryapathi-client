@@ -44,50 +44,26 @@ const Footer = () => {
       <ul className="relative flex flex-wrap items-center justify-center mx-10 my-0">
         <li className="mx-[10px]">
           <Link
-            href={"/"}
-            className="font-sinha text-[1.2rem] text-[#fff] inline-block transition duration-300 opacity-75 hover:opacity-100"
+            href={"/terms-and-conditions"}
+            className=" text-lg text-[#fff] inline-block transition duration-300 opacity-75 hover:opacity-100"
           >
-            uq,amsgqj
+            Terms & Conditions
           </Link>
         </li>
         <li className="mx-[10px]">
           <Link
-            href={"/proposal"}
-            className="font-sinha text-[1.2rem] text-[#fff] inline-block transition duration-300 opacity-75 hover:opacity-100"
+            href={"/refund-policy"}
+            className=" text-lg text-[#fff] inline-block transition duration-300 opacity-75 hover:opacity-100"
           >
-            ux., fiajh
+            Refund Policy
           </Link>
         </li>
-        <li className="mx-[10px] pl-2 ">
+        <li className="mx-[10px]">
           <Link
-            href={"/babyname"}
-            className="font-sinha text-[1.2rem] text-[#fff] inline-block transition duration-300 opacity-75 hover:opacity-100"
+            href={"/privacy-policy"}
+            className=" text-lg text-[#fff] inline-block transition duration-300 opacity-75 hover:opacity-100"
           >
-            {"<ore kï"}
-          </Link>
-        </li>
-        <li className="mx-[10px]  pl-2">
-          <Link
-            href={"/astrology"}
-            className="font-sinha text-[1.2rem] text-[#fff] inline-block transition duration-300 opacity-75 hover:opacity-100"
-          >
-            fcda;SIh fiajdjka
-          </Link>
-        </li>
-        <li className="mx-[10px]  pl-2">
-          <Link
-            href={"/about"}
-            className="font-sinha text-[1.2rem] text-[#fff] inline-block transition duration-300 opacity-75 hover:opacity-100"
-          >
-            wms .ek
-          </Link>
-        </li>
-        <li className="mx-[10px]  pl-2">
-          <Link
-            href={"/contact"}
-            className="font-sinha text-[1.2rem] text-[#fff] inline-block transition duration-300 opacity-75 hover:opacity-100"
-          >
-            wmsj iïnkao lr.kak
+            Privacy Policy
           </Link>
         </li>
       </ul>

@@ -29,7 +29,7 @@ export default function RootLayout({ children }) {
         />
         <link rel="manifest" href="/site.webmanifest" />
       </Head>
-      <body>{children}</body>
+      <body className="bg-stone-100">{children}</body>
     </html>
   );
 }

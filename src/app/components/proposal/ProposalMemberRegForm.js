@@ -13,7 +13,6 @@ import {
 } from "@/db/selecterOptions";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { DevTool } from "@hookform/devtools";
 import { formValidations } from "@/db/formValidations";
 import FormError from "../FormError";
 import { isOlderThan16 } from "../functions";
@@ -106,6 +105,7 @@ const ProposalMemberRegForm = () => {
                     name="birthYear"
                     {...register("birthYear", {
                       required: formValidations.birthDay.required.yearMessage,
+                      maxLength: 4,
                       validate: (fieldValue) => isOlderThan16(fieldValue),
                     })}
                     placeholder="අවුරුද්ද"
@@ -117,6 +117,7 @@ const ProposalMemberRegForm = () => {
                     name="birthMonth"
                     {...register("birthMonth", {
                       required: formValidations.birthDay.required.monthMessage,
+                      maxLength: 2,
                     })}
                     placeholder="මාසය"
                     className="w-full px-4 py-2 mt-2 rounded-md outline-none ring-1 ring-gray-300 focus:ring-2 focus:ring-teal-300"
@@ -127,6 +128,7 @@ const ProposalMemberRegForm = () => {
                     name="birthDay"
                     {...register("birthDay", {
                       required: formValidations.birthDay.required.dayMessage,
+                      maxLength: 2,
                     })}
                     placeholder="දිනය"
                     className="w-full px-4 py-2 mt-2 rounded-md outline-none ring-1 ring-gray-300 focus:ring-2 focus:ring-teal-300"
@@ -418,6 +420,7 @@ const ProposalMemberRegForm = () => {
                   name="submitBtn"
                   className="w-full py-3 font-bold text-center text-white bg-purple-500 rounded-lg"
                   type="submit"
+                  disabled={isLoading ? true : false}
                 >
                   ලියපදින්චි වන්න
                 </button>
