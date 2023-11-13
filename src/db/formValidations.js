@@ -24,4 +24,5 @@ export const formValidations = {
     },
   },
   address: { required: { message: "ලිපිනය ඇතුලත් කල යුතුයී." } },
+  birthTime: { required: { message: "උපන් වේලාව ඇතුලත්කල යුතුයී." } },
 };

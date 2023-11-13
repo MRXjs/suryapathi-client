@@ -70,6 +70,7 @@ export const professions = [
   { value: "මිනින්දෝරු" },
   { value: "ගුරු" },
   { value: "කාර්මික ශිල්පියා" },
+  { value: "පෞද්ගලික අංශයේ" },
   { value: "වෙනත්" },
   { value: "රැකියාවක් නොකරයි" },
 ];
@@ -127,4 +128,10 @@ export const districts = [
   { value: "රත්නපුර" },
   { value: "ත්‍රිකුණාමලය" },
   { value: "වවුනියාව" },
+];
+
+export const nameCategorys = [
+  { value: "දේශීය සින්හල නම්" },
+  { value: "බටහිර නම්" },
+  { value: "දේශීය විදේශිය නම්" },
 ];

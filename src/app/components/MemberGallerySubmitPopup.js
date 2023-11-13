@@ -3,8 +3,13 @@ import Image from "next/image";
 import ReqContactForm from "./ReqContactForm";
 import data from "@/db/data";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { toastError } from "./toast";
+import { proposalCreate } from "../api/proposal";
 
 const MemberGallerySubmitPopup = ({ open, selectedMembers, onClose }) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const router = useRouter();
   if (!open) return null;
 
@@ -49,15 +54,27 @@ const MemberGallerySubmitPopup = ({ open, selectedMembers, onClose }) => {
             })}
           </div>
 
-          {/* content */}
           <div className="flex flex-col items-center justify-center gap-3 mb-5 ">
             <ReqContactForm
-              formSubmit={(e) => {
-                e.preventDefault();
-                if (e.target.paymentMethod.value == "bank transfer") {
-                  router.push("/payment");
+              formSubmit={async (data) => {
+                if (data.payment_method == "bank transfer") {
+                  let package_type = 1;
+                  if (selectedMembers.length == 5) {
+                    package_type = 2;
+                  } else if (selectedMembers.length == 10) {
+                    package_type = 3;
+                  }
+                  const proposalData = {
+                    phone: data.phone,
+                    full_name: data.full_name,
+                    description: data.description,
+                    payment_method: data.payment_method,
+                    package_type,
+                    selected_members: JSON.stringify(selectedMembers),
+                  };
+                  await proposalCreate(proposalData, router);
                 } else {
-                  console.log(e.target.paymentMethod.value);
+                  toastError("දැනට ඔබට Online ක්‍රමයට ගෙවිමට නොහැක");
                 }
               }}
             />

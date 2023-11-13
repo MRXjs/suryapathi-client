@@ -7,9 +7,15 @@ import MemberCard from "./MemberGalleryCard";
 import { Navigation } from "swiper/modules";
 import "swiper/css/navigation";
 import MemberSliderCard from "./MemberSliderCard";
+import { memberSlid } from "../api/member";
 
 const MemberSlider = () => {
   const [slidesPerView, setSlidesPerView] = useState(4);
+
+  // useEffect(() => {
+  //   memberSlid();
+  //   console.log("test");
+  // }, []);
 
   useEffect(() => {
     // Calculate the number of slides to display based on screen width

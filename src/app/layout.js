@@ -1,5 +1,7 @@
 import Head from "next/head";
 import "./globals.css";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from "react-toastify";
 
 export const metadata = {
   title: "සුර්යාපති",
@@ -29,7 +31,21 @@ export default function RootLayout({ children }) {
         />
         <link rel="manifest" href="/site.webmanifest" />
       </Head>
-      <body className="bg-stone-100">{children}</body>
+      <body className="bg-stone-100">
+        <ToastContainer
+          position="top-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="dark"
+        />
+        {children}
+      </body>
     </html>
   );
 }

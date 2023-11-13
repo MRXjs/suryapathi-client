@@ -17,7 +17,7 @@ import { formValidations } from "@/db/formValidations";
 import FormError from "../FormError";
 import { isOlderThan16 } from "../functions";
 import LoadingScreen from "../LoadingScreen";
-import { proposalCreate } from "@/app/api/apiCalls";
+import { memberCreate } from "@/app/api/member";
 import { ToastContainer } from "react-toastify";
 import { toastSuccess } from "../toast";
 import "react-toastify/dist/ReactToastify.css";
@@ -34,7 +34,7 @@ const ProposalMemberRegForm = () => {
 
   const formSubmitHandler = async (data) => {
     setIsLoading(true);
-    await proposalCreate(data);
+    await memberCreate(data);
     setIsLoading(false);
   };
 

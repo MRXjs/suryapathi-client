@@ -1,8 +1,12 @@
 "use client";
 import React from "react";
 import ReqContactForm from "./ReqContactForm";
+import { toastError } from "./toast";
+import { astrologyCreate } from "../api/astrology";
+import { useRouter } from "next/navigation";
 
-const AstrologyPopupModel = ({ open, service, onClose, formSubmit }) => {
+const AstrologyPopupModel = ({ open, service, onClose }) => {
+  const router = useRouter();
   if (!open) return null;
 
   return (
@@ -36,7 +40,24 @@ const AstrologyPopupModel = ({ open, service, onClose, formSubmit }) => {
 
         {typeof service.price == "number" ? (
           <div className="mx-3 my-3">
-            <ReqContactForm formSubmit={formSubmit} />
+            <ReqContactForm
+              formSubmit={(data) => {
+                if (data.payment_method == 1) {
+                  const astrologyData = {
+                    service: service.id,
+                    name: data.full_name,
+                    phone: data.phone,
+                    description: data.description,
+                    payment_method: JSON.parse(data.payment_method),
+                    payment_status: false,
+                  };
+
+                  astrologyCreate(astrologyData, router);
+                } else {
+                  toastError("දැනට ඔබට Online ක්‍රමයට ගෙවිමට නොහැක");
+                }
+              }}
+            />
           </div>
         ) : (
           <div className="p-2 font-semibold text-center text-white bg-red-700">
