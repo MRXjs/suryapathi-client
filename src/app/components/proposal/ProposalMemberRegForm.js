@@ -29,12 +29,14 @@ const ProposalMemberRegForm = () => {
     handleSubmit,
     formState: { errors },
     watch,
+    reset,
   } = useForm();
   const [isLoading, setIsLoading] = useState(false);
 
   const formSubmitHandler = async (data) => {
     setIsLoading(true);
     await memberCreate(data);
+    reset();
     setIsLoading(false);
   };
 

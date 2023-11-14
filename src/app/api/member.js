@@ -53,3 +53,27 @@ export const memberSlid = async () => {
     console.log(resp);
   } catch (error) {}
 };
+
+export const getAllMembers = async (
+  pageNumber,
+  filterAge,
+  filterGender,
+  filterNation
+) => {
+  try {
+    const params = new URLSearchParams();
+
+    if (filterGender) params.append("gender", filterGender);
+    if (filterNation) params.append("nation", filterNation);
+
+    const resp = await axios.get(
+      `${
+        process.env.NEXT_PUBLIC_API_URL
+      }/member/all/${pageNumber}?${params.toString()}`
+    );
+    return resp.data;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};

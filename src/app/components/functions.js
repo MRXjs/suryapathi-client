@@ -1,3 +1,5 @@
+import { professions } from "@/db/selecterOptions";
+
 export const calculateAge = (dateOfBirth) => {
   const today = new Date();
   const birthDate = new Date(dateOfBirth);
@@ -54,3 +56,13 @@ export function dataURItoFile(dataURI, filename) {
     resolve(new File([blob], filename, { type: mime }));
   });
 }
+
+export const getProfessions = (job) => {
+  let value = "";
+  professions.map((profession, index) => {
+    if (index == job) {
+      value = profession.value;
+    }
+  });
+  return value;
+};

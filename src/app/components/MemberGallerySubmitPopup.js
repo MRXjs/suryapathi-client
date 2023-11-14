@@ -34,23 +34,21 @@ const MemberGallerySubmitPopup = ({ open, selectedMembers, onClose }) => {
 
           <h1 className="text-xl text-center mt-96 sm:mt-3">ඔබ තෝරාගත් අය</h1>
           <div className="flex flex-row flex-wrap items-center justify-center gap-3 ">
-            {data.map((person) => {
-              return selectedMembers.map((selectedMember) => {
-                if (person.id == selectedMember) {
-                  return (
-                    <div
-                      key={person.id}
-                      className="flex items-center justify-center p-4 shadow-xl cursor-pointer"
-                    >
-                      <Image
-                        src={person.img}
-                        alt={person.name}
-                        className="w-16 rounded-full"
-                      />
-                    </div>
-                  );
-                }
-              });
+            {selectedMembers.map((selectedMember) => {
+              return (
+                <div
+                  key={selectedMember.id}
+                  className="flex items-center justify-center p-2 shadow-xl cursor-pointer"
+                >
+                  <Image
+                    src={selectedMember.profile_image_url}
+                    alt={selectedMember.full_name}
+                    width={300}
+                    height={300}
+                    className="w-20 rounded-full"
+                  />
+                </div>
+              );
             })}
           </div>
 

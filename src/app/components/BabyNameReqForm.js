@@ -132,9 +132,7 @@ const BabyNameReqForm = () => {
                 name="district"
                 {...register("district", {
                   validate: (fieldValue) => {
-                    return (
-                      fieldValue !== "0" || "ඔබ ජීවත්වන දිස්ත්‍රීකය තෝරාගන්න."
-                    );
+                    return fieldValue !== "0" || "උපන් දිස්ත්‍රීකය තෝරාගන්න.";
                   },
                 })}
                 className="w-full px-4 py-2 mt-2 rounded-md outline-none cursor-pointer ring-1 ring-gray-300 focus:ring-2 focus:ring-teal-300"

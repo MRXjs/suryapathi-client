@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import React from "react";
-import { calculateAge } from "./functions";
+import { calculateAge, getProfessions } from "./functions";
 
 const MemberPopupModel = ({ open, person, onClose }) => {
   if (!open) return null;
@@ -24,22 +24,25 @@ const MemberPopupModel = ({ open, person, onClose }) => {
           x
         </p>
         <Image
-          alt={person.name}
-          src={person.img}
+          alt={person.full_name}
+          src={person.profile_image_url}
           className="mx-auto my-10 rounded-md w-72"
+          width={100}
+          height={100}
         />
         {/* content */}
         <div className="flex flex-col items-center justify-center mb-5 ">
           <div>
             <div className="text-xl">
-              <span className="font-bold ">ID :</span> {person.id}
+              <span className="font-bold ">ID: </span> {person.id}
             </div>
             <div className="text-xl">
-              <span className="font-bold ">නම :</span> {person.name}
+              <span className="font-bold ">රැකියාව: </span>{" "}
+              {getProfessions(person.job)}
             </div>
             <div className="text-xl">
-              <span className="font-bold ">වයස :</span>{" "}
-              {calculateAge(person.birthDay)}
+              <span className="font-bold ">වයස: </span>
+              {calculateAge(person.birthday)}
             </div>
           </div>
         </div>

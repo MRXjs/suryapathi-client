@@ -1,6 +1,7 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import { calculateAge } from "./functions";
+import { calculateAge, getProfessions } from "./functions";
+import avatarLoading from "../../../public/avatrLoading.gif";
 
 const MemberGalleryCard = ({
   person,
@@ -8,6 +9,8 @@ const MemberGalleryCard = ({
   cardSelectHandler,
   isCardSelected,
 }) => {
+  const [imgIsLoading, setImgIsLoading] = useState(true);
+
   return (
     <div
       className={`flex flex-col items-center w-[330px] h-[400px] text-center mx-5 mb-5 cursor-pointer rounded-md shadow-xl hover:shadow-2xl transition duration-300 ${
@@ -15,15 +18,27 @@ const MemberGalleryCard = ({
       } my-10 hover:scale-105`}
     >
       <Image
-        src={person.img}
+        className={`absolute ${!imgIsLoading ? "hidden" : ""}`}
+        src={avatarLoading}
+        width={200}
+        height={200}
+        alt="loading"
+      />
+
+      <Image
+        src={person.profile_image_url}
+        onLoad={() => {
+          setImgIsLoading(false);
+        }}
+        loading="lazy"
         width={200}
         height={200}
         alt=""
         className="mt-5 rounded-md"
       />
       <div className="font-bold">ID : {person.id}</div>
-      <div className="text-[16px] ">{person.name}</div>
-      <div>වයස : {calculateAge(person.birthDay)}</div>
+      <div className="text-[16px] ">{getProfessions(person.job)}</div>
+      <div>වයස : {calculateAge(person.birthday)}</div>
 
       <button
         type="button"
@@ -40,7 +55,7 @@ const MemberGalleryCard = ({
             ? "bg-white hover:bg-[#8f8f8f] text-black "
             : "bg-[#ca8a04] hover:bg-[#a16207] text-white"
         } focus:outline-none focus:ring-4 focus:ring-blue-300 font-semibold text-lg px-5 py-4 text-center mr-2 mb-2 w-full duration-300 `}
-        onClick={() => cardSelectHandler(person.id)}
+        onClick={() => cardSelectHandler(person)}
       >
         {`${person.gender == "ස්ත්‍රී" ? "ඇයව " : "ඔහුව"} ${
           isCardSelected(person.id) ? "තෝරා නොගන්න" : "තෝරා ගන්න "
