@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BsWhatsapp } from "react-icons/bs";
 import { useRouter } from "next/navigation";
 import Navbar from "./Navbar";
@@ -14,6 +14,7 @@ import LoadingScreen from "./LoadingScreen";
 
 const BabyNameReqForm = () => {
   const router = useRouter();
+  const [isEmail, setIsEmail] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
 
   const {
@@ -21,28 +22,42 @@ const BabyNameReqForm = () => {
     control,
     handleSubmit,
     formState: { errors },
+    watch,
   } = useForm();
 
+  const paymentMethod = watch("payment_method");
+
+  useEffect(() => {
+    setIsEmail(paymentMethod);
+  }, [paymentMethod]);
+
   const formHandler = async (data) => {
-    if (data.payment_method == 1) {
-      const payment_status = false;
-      const formData = {
-        birthday: `${data.birthYear}-${data.birthMonth}-${data.birthDay}`,
-        birthtime: data.birthTime,
-        gender: JSON.parse(data.gender),
-        city: JSON.parse(data.district),
-        expected_name: data.nameCategory,
-        description: data.description,
-        phone: data.phoneNo,
-        name: data.name,
-        payment_method: JSON.parse(data.payment_method),
-        payment_status,
-      };
+    const formData = {
+      birthday: `${data.birthYear}-${data.birthMonth}-${data.birthDay}`,
+      birthtime: data.birthTime,
+      gender: JSON.parse(data.gender),
+      city: JSON.parse(data.district),
+      expected_name: data.nameCategory,
+      description: data.description,
+      phone: data.phoneNo,
+      first_name: data.first_name,
+      last_name: data.last_name,
+      payment_method: JSON.parse(data.payment_method),
+      payment_switch: "",
+      email: "",
+    };
+    if (data.payment_method == 0) {
       setIsLoading(true);
-      await babyNameCreate(formData, router);
+      formData.payment_switch = "bank transfer";
+      await babyNameCreate(formData);
       setIsLoading(false);
+      router.push("/payment");
     } else {
-      toastError("දැනට ඔබට Online ක්‍රමයට ගෙවිමට නොහැක");
+      setIsLoading(true);
+      formData.payment_switch = "online";
+      formData.email = data.email;
+      await babyNameCreate(formData);
+      setIsLoading(false);
     }
   };
 
@@ -214,17 +229,34 @@ const BabyNameReqForm = () => {
               ) : null}
             </div>
             <div className="mt-5">
-              <span>ඔබගෙ නම</span>
+              <span>පලමු නම</span>
               <input
-                id="name"
-                name="name"
-                {...register("name", {
+                id="first_name"
+                name="first_name"
+                type="text"
+                {...register("first_name", {
                   required: formValidations.name.required.message,
                 })}
-                placeholder="සම්පුර්න නම"
                 className="w-full px-4 py-2 mt-2 rounded-md outline-none ring-1 ring-gray-300 focus:ring-2 focus:ring-teal-300"
               />
-              {errors.name ? <FormError error={errors.name.message} /> : null}
+              {errors.first_name ? (
+                <FormError error={errors.first_name.message} />
+              ) : null}
+            </div>
+            <div className="mt-5">
+              <span>දෙවන නම </span>
+              <input
+                id="last_name"
+                name="last_name"
+                type="text"
+                {...register("last_name", {
+                  required: formValidations.name.required.message,
+                })}
+                className="w-full px-4 py-2 mt-2 rounded-md outline-none ring-1 ring-gray-300 focus:ring-2 focus:ring-teal-300"
+              />
+              {errors.last_name ? (
+                <FormError error={errors.last_name.message} />
+              ) : null}
             </div>
             <div className="mt-5">
               <span>විස්තරය</span>
@@ -249,10 +281,29 @@ const BabyNameReqForm = () => {
                 required
                 {...register("payment_method")}
               >
-                <option value={0}>Online</option>
-                <option value={1}>Bank transfer</option>
+                <option value={0}>Bank transfer</option>
+                <option value={1}>Online</option>
               </select>
             </div>
+            {isEmail == 1 ? (
+              <div className="mt-5">
+                <span className="font-semibold text-red-600 ">
+                  විද්‍යුත් තැපැල් ලිපිනය
+                </span>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  {...register("email", {
+                    required: formValidations.email.required.message,
+                  })}
+                  className="w-full px-4 py-2 mt-2 rounded-md outline-none ring-1 ring-gray-300 focus:ring-2 focus:ring-teal-300"
+                />
+                {errors.email ? (
+                  <FormError error={errors.email.message} />
+                ) : null}
+              </div>
+            ) : null}
             <div className="mt-5">
               <button
                 className="w-full py-3 font-bold text-center text-white bg-purple-500 rounded-lg"

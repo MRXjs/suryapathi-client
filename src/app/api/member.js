@@ -50,8 +50,11 @@ export const memberSlid = async () => {
     const resp = await axios.get(
       `${process.env.NEXT_PUBLIC_API_URL}/member/slid`
     );
-    console.log(resp);
-  } catch (error) {}
+    return resp.data;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
 };
 
 export const getAllMembers = async (

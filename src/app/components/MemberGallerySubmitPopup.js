@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toastError } from "./toast";
 import { proposalCreate } from "../api/proposal";
+import LoadingScreen from "./LoadingScreen";
 
 const MemberGallerySubmitPopup = ({ open, selectedMembers, onClose }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -14,48 +15,49 @@ const MemberGallerySubmitPopup = ({ open, selectedMembers, onClose }) => {
   if (!open) return null;
 
   return (
-    <div
-      className="fixed top-0 bottom-0 left-0 right-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
-      onClick={onClose}
-    >
-      <div className="flex items-center justify-center w-screen md:w-[60%] lg:w-[50%] xl:w-[40%] h-full p-5 my-10 overflow-y-auto bg-white">
-        <div
-          className=""
-          onClick={(e) => {
-            e.stopPropagation();
-          }}
-        >
-          <p
-            onClick={onClose}
-            className="fixed bg-[#eee] text-center pb-2 px-2 rounded-lg right-[6%] top-1 sm:top-5 text-4xl cursor-pointer  text-[#a82e2e] hover:text-[#ff5454]"
+    <>
+      {isLoading ? <LoadingScreen /> : null}
+      <div
+        className="fixed top-0 bottom-0 left-0 right-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+        onClick={onClose}
+      >
+        <div className="flex items-center justify-center w-screen md:w-[60%] lg:w-[50%] xl:w-[40%] h-full p-5 my-10 overflow-y-auto bg-white">
+          <div
+            className=""
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
           >
-            x
-          </p>
+            <p
+              onClick={onClose}
+              className="fixed bg-[#eee] text-center pb-2 px-2 rounded-lg right-[6%] top-1 sm:top-5 text-4xl cursor-pointer  text-[#a82e2e] hover:text-[#ff5454]"
+            >
+              x
+            </p>
 
-          <h1 className="text-xl text-center mt-96 sm:mt-3">ඔබ තෝරාගත් අය</h1>
-          <div className="flex flex-row flex-wrap items-center justify-center gap-3 ">
-            {selectedMembers.map((selectedMember) => {
-              return (
-                <div
-                  key={selectedMember.id}
-                  className="flex items-center justify-center p-2 shadow-xl cursor-pointer"
-                >
-                  <Image
-                    src={selectedMember.profile_image_url}
-                    alt={selectedMember.full_name}
-                    width={300}
-                    height={300}
-                    className="w-20 rounded-full"
-                  />
-                </div>
-              );
-            })}
-          </div>
+            <h1 className="text-xl text-center mt-96 sm:mt-3">ඔබ තෝරාගත් අය</h1>
+            <div className="flex flex-row flex-wrap items-center justify-center gap-3 ">
+              {selectedMembers.map((selectedMember) => {
+                return (
+                  <div
+                    key={selectedMember.id}
+                    className="flex items-center justify-center p-2 shadow-xl cursor-pointer"
+                  >
+                    <Image
+                      src={selectedMember.profile_image_url}
+                      alt="profile"
+                      width={300}
+                      height={300}
+                      className="w-20 rounded-full"
+                    />
+                  </div>
+                );
+              })}
+            </div>
 
-          <div className="flex flex-col items-center justify-center gap-3 mb-5 ">
-            <ReqContactForm
-              formSubmit={async (data) => {
-                if (data.payment_method == "bank transfer") {
+            <div className="flex flex-col items-center justify-center gap-3 mb-5 ">
+              <ReqContactForm
+                formSubmit={async (data) => {
                   let package_type = 1;
                   if (selectedMembers.length == 5) {
                     package_type = 2;
@@ -64,29 +66,43 @@ const MemberGallerySubmitPopup = ({ open, selectedMembers, onClose }) => {
                   }
                   const proposalData = {
                     phone: data.phone,
-                    full_name: data.full_name,
+                    first_name: data.first_name,
+                    last_name: data.last_name,
+                    phone: data.phone,
                     description: data.description,
-                    payment_method: data.payment_method,
+                    payment_method: JSON.parse(data.payment_method),
                     package_type,
-                    selected_members: JSON.stringify(selectedMembers),
+                    selected_members: JSON.stringify(
+                      selectedMembers.map((member) => member.id)
+                    ),
                   };
-                  await proposalCreate(proposalData, router);
-                } else {
-                  toastError("දැනට ඔබට Online ක්‍රමයට ගෙවිමට නොහැක");
-                }
-              }}
-            />
-            <button
-              type="button"
-              class="w-full sm:w-80 py-3 font-bold text-center text-white bg-[#c22727] rounded-lg shadow-lg hover:text-black hover:bg-[#ff5151]   "
-              onClick={onClose}
-            >
-              අවලංගු කරන්න
-            </button>
+                  if (data.payment_method == 0) {
+                    setIsLoading(true);
+                    proposalData.payment_switch = "bank transfer";
+                    await proposalCreate(proposalData);
+                    setIsLoading(false);
+                    router.push("/payment");
+                  } else {
+                    setIsLoading(true);
+                    proposalData.payment_switch = "online";
+                    proposalData.email = data.email;
+                    await proposalCreate(proposalData);
+                    setIsLoading(false);
+                  }
+                }}
+              />
+              <button
+                type="button"
+                class="w-full sm:w-80 py-3 font-bold text-center text-white bg-[#c22727] rounded-lg shadow-lg hover:text-black hover:bg-[#ff5151]   "
+                onClick={onClose}
+              >
+                අවලංගු කරන්න
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

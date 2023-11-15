@@ -8,7 +8,6 @@ export const astrologyCreate = async (data, router) => {
       data
     );
     toastSuccess(resp.data.message);
-    router.push("/payment");
   } catch (error) {
     toastError(error.response ? error.response.data.error : error.message);
   }

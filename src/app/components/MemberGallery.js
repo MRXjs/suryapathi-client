@@ -18,8 +18,8 @@ import LoadingScreen from "./LoadingScreen";
 const MemberGallery = () => {
   const [members, setMembers] = useState([]);
   let memberPerPage = 10;
-  const [pageCount, setPageCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
+  const [pageCount, setPageCount] = useState(0);
 
   const [currentPerson, setCurrentPerson] = useState({});
 

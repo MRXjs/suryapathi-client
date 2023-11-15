@@ -8,14 +8,28 @@ import { Navigation } from "swiper/modules";
 import "swiper/css/navigation";
 import MemberSliderCard from "./MemberSliderCard";
 import { memberSlid } from "../api/member";
+import LoadingScreen from "./LoadingScreen";
 
 const MemberSlider = () => {
+  const [members, setMembers] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [slidesPerView, setSlidesPerView] = useState(4);
 
-  // useEffect(() => {
-  //   memberSlid();
-  //   console.log("test");
-  // }, []);
+  // fetchData
+  const fetchData = async () => {
+    try {
+      setIsLoading(true);
+      const data = await memberSlid();
+      setMembers(data);
+      setIsLoading(false);
+    } catch (error) {
+      return null;
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   useEffect(() => {
     // Calculate the number of slides to display based on screen width
@@ -54,25 +68,29 @@ const MemberSlider = () => {
   }, []);
 
   return (
-    <div className="mt-10 ">
-      <Swiper
-        loop={true}
-        spaceBetween={10}
-        slidesPerView={slidesPerView}
-        navigation={true}
-        modules={[Navigation]}
-      >
-        {data.map((person, personIndex) => {
-          return (
-            <SwiperSlide key={personIndex}>
-              <div className="flex items-center justify-center mt-10">
-                <MemberSliderCard person={person} />
-              </div>
-            </SwiperSlide>
-          );
-        })}
-      </Swiper>
-    </div>
+    <>
+      {isLoading ? <LoadingScreen /> : null}
+      <div className="mt-10 ">
+        <Swiper
+          loop={true}
+          spaceBetween={10}
+          slidesPerView={slidesPerView}
+          navigation={true}
+          modules={[Navigation]}
+          autoplay={{ delay: 2500 }}
+        >
+          {members.map((person, personIndex) => {
+            return (
+              <SwiperSlide key={personIndex}>
+                <div className="flex items-center justify-center mt-10">
+                  <MemberSliderCard person={person} />
+                </div>
+              </SwiperSlide>
+            );
+          })}
+        </Swiper>
+      </div>
+    </>
   );
 };
 

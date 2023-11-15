@@ -1,34 +1,37 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import ReqContactForm from "./ReqContactForm";
 import { toastError } from "./toast";
 import { astrologyCreate } from "../api/astrology";
 import { useRouter } from "next/navigation";
+import LoadingScreen from "./LoadingScreen";
 
 const AstrologyPopupModel = ({ open, service, onClose }) => {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
   if (!open) return null;
 
   return (
     <div
-      className="z-50  bg-[rgba(0,0,0,0.5)] fixed w-screen h-screen top-0 left-0"
+      className="fixed top-0 bottom-0 left-0 right-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
       onClick={onClose}
     >
+      {isLoading ? <LoadingScreen /> : null}
       {/*container */}
       <div
-        className="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-[350px] bg-white w shadow-2xl rounded-lg "
+        className="flex items-center justify-center flex-col w-screen md:w-[60%] lg:w-[50%] xl:w-[40%] h-full p-5 my-10 overflow-y-auto bg-white "
         onClick={(e) => {
           e.stopPropagation();
         }}
       >
         <p
           onClick={onClose}
-          className="fixed text-4xl cursor-pointer right-3 text-[#797777] hover:text-[#353535] hover:text-red-600"
+          className="fixed bg-[#eee] text-center pb-2 px-2 rounded-lg right-[6%] top-1 sm:top-5 text-4xl cursor-pointer  text-[#a82e2e] hover:text-[#ff5454]"
         >
           x
         </p>
 
-        <h1 className="mt-10 mb-3 text-2xl font-bold tracking-tight text-center text-gray-900">
+        <h1 className="mt-20 mb-3 text-2xl font-bold tracking-tight text-center text-gray-900">
           {service.title}
         </h1>
 
@@ -41,20 +44,28 @@ const AstrologyPopupModel = ({ open, service, onClose }) => {
         {typeof service.price == "number" ? (
           <div className="mx-3 my-3">
             <ReqContactForm
-              formSubmit={(data) => {
-                if (data.payment_method == 1) {
-                  const astrologyData = {
-                    service: service.id,
-                    name: data.full_name,
-                    phone: data.phone,
-                    description: data.description,
-                    payment_method: JSON.parse(data.payment_method),
-                    payment_status: false,
-                  };
-
-                  astrologyCreate(astrologyData, router);
+              formSubmit={async (data) => {
+                const astrologyData = {
+                  service: service.id,
+                  first_name: data.first_name,
+                  last_name: data.last_name,
+                  phone: data.phone,
+                  description: data.description,
+                  payment_method: JSON.parse(data.payment_method),
+                  payment_switch: "bank transfer",
+                  email: "",
+                };
+                if (data.payment_method == 0) {
+                  setIsLoading(true);
+                  await astrologyCreate(astrologyData, router);
+                  setIsLoading(false);
+                  router.push("/payment");
                 } else {
-                  toastError("දැනට ඔබට Online ක්‍රමයට ගෙවිමට නොහැක");
+                  setIsLoading(true);
+                  astrologyData.payment_switch = "online";
+                  astrologyData.email = data.email;
+                  await astrologyCreate(astrologyData, router);
+                  setIsLoading(false);
                 }
               }}
             />

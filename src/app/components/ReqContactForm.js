@@ -1,17 +1,26 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BsWhatsapp } from "react-icons/bs";
 import { useForm } from "react-hook-form";
 import { formValidations } from "@/db/formValidations";
 import FormError from "./FormError";
 
 const ReqContactForm = ({ formSubmit }) => {
+  const [isEmail, setIsEmail] = useState(0);
+
   const {
     register,
     control,
     handleSubmit,
     formState: { errors },
+    watch,
   } = useForm();
+
+  const paymentMethod = watch("payment_method");
+
+  useEffect(() => {
+    setIsEmail(paymentMethod);
+  }, [paymentMethod]);
 
   return (
     <>
@@ -43,18 +52,33 @@ const ReqContactForm = ({ formSubmit }) => {
           {errors.phone ? <FormError error={errors.phone.message} /> : null}
         </div>
         <div className="mt-5">
-          <span>ඔබගෙ නම</span>
+          <span>පලමු නම</span>
           <input
-            id="full_name"
-            name="full_name"
+            id="first_name"
+            name="first_name"
             type="text"
-            {...register("full_name", {
+            {...register("first_name", {
               required: formValidations.name.required.message,
             })}
-            className="w-full px-2 py-1 rounded-md outline-none ring-1 ring-gray-300 focus:ring-2 focus:ring-teal-300"
+            className="w-full px-4 py-2 mt-2 rounded-md outline-none ring-1 ring-gray-300 focus:ring-2 focus:ring-teal-300"
           />
-          {errors.full_name ? (
-            <FormError error={errors.full_name.message} />
+          {errors.first_name ? (
+            <FormError error={errors.first_name.message} />
+          ) : null}
+        </div>
+        <div className="mt-5">
+          <span>දෙවන නම </span>
+          <input
+            id="last_name"
+            name="last_name"
+            type="text"
+            {...register("last_name", {
+              required: formValidations.name.required.message,
+            })}
+            className="w-full px-4 py-2 mt-2 rounded-md outline-none ring-1 ring-gray-300 focus:ring-2 focus:ring-teal-300"
+          />
+          {errors.last_name ? (
+            <FormError error={errors.last_name.message} />
           ) : null}
         </div>
         <div className="mt-5">
@@ -77,10 +101,27 @@ const ReqContactForm = ({ formSubmit }) => {
             required
             {...register("payment_method")}
           >
-            <option value={0}>Online</option>
-            <option value={1}>Bank transfer</option>
+            <option value={0}>Bank transfer</option>
+            <option value={1}>Online</option>
           </select>
         </div>
+        {isEmail == 1 ? (
+          <div className="mt-5">
+            <span className="font-semibold text-red-600 ">
+              විද්‍යුත් තැපැල් ලිපිනය
+            </span>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              {...register("email", {
+                required: formValidations.email.required.message,
+              })}
+              className="w-full px-4 py-2 mt-2 rounded-md outline-none ring-1 ring-gray-300 focus:ring-2 focus:ring-teal-300"
+            />
+            {errors.email ? <FormError error={errors.email.message} /> : null}
+          </div>
+        ) : null}
         <div className="mt-10">
           <button
             className="w-full py-3 font-bold text-center text-white bg-green-700 rounded-lg shadow-lg hover:text-black hover:bg-green-300"
