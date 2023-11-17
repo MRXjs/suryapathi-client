@@ -1,6 +1,6 @@
 "use client";
 import "./style.css";
-import AvatarShow from "../AvatarShow";
+import Avatar from "../Avatar";
 import {
   castes,
   districts,
@@ -67,7 +67,7 @@ const ProposalMemberRegForm = () => {
               noValidate
             >
               <div className="flex flex-col items-center justify-center ">
-                <AvatarShow
+                <Avatar
                   selectedAvatar={watch("avatar") ? watch("avatar")[0] : ""}
                 />
 

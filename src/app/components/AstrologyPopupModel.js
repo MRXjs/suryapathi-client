@@ -45,28 +45,9 @@ const AstrologyPopupModel = ({ open, service, onClose }) => {
           <div className="mx-3 my-3">
             <ReqContactForm
               formSubmit={async (data) => {
-                const astrologyData = {
-                  service: service.id,
-                  first_name: data.first_name,
-                  last_name: data.last_name,
-                  phone: data.phone,
-                  description: data.description,
-                  payment_method: JSON.parse(data.payment_method),
-                  payment_switch: "bank transfer",
-                  email: "",
-                };
-                if (data.payment_method == 0) {
-                  setIsLoading(true);
-                  await astrologyCreate(astrologyData, router);
-                  setIsLoading(false);
-                  router.push("/payment");
-                } else {
-                  setIsLoading(true);
-                  astrologyData.payment_switch = "online";
-                  astrologyData.email = data.email;
-                  await astrologyCreate(astrologyData, router);
-                  setIsLoading(false);
-                }
+                setIsLoading(true);
+                await astrologyCreate(service, data, router);
+                setIsLoading(false);
               }}
             />
           </div>

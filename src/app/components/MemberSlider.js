@@ -2,8 +2,6 @@
 import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import data from "@/db/data";
-import MemberCard from "./MemberGalleryCard";
 import { Navigation } from "swiper/modules";
 import "swiper/css/navigation";
 import MemberSliderCard from "./MemberSliderCard";

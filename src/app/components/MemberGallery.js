@@ -1,14 +1,11 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import MemberGalleryCard from "./MemberGalleryCard";
-import { BsSearch } from "react-icons/bs";
-import SearchBar from "./SearchBar";
 import ReactPaginate from "react-paginate";
 import MemberPopupModel from "./MemberPopupModel";
-import { gender, nation, age } from "@/db/selecterOptions";
-import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
+import { gender, nation, age, professions } from "@/db/selecterOptions";
 import PackageChangePopupModel from "./PackageChangePopupModel";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import MemberGallerySubmitPopup from "./MemberGallerySubmitPopup";
 import { getAllMembers } from "../api/member";
@@ -23,9 +20,12 @@ const MemberGallery = () => {
 
   const [currentPerson, setCurrentPerson] = useState({});
 
-  const [filterGender, setFilterGender] = useState("");
-  const [filterNation, setFilterNation] = useState("");
-  const [filterAge, setFilterAge] = useState("");
+  const [filterValues, setFilterValues] = useState({
+    filterGender: "",
+    filterNation: "",
+    filterAge: "",
+    filterJob: "",
+  });
 
   const [isStatusOn, setIsStatusOn] = useState(true);
   const [selectedCards, setSelectedCards] = useState([]);
@@ -43,12 +43,7 @@ const MemberGallery = () => {
   const fetchData = async (pg) => {
     try {
       setIsLoading(true);
-      const data = await getAllMembers(
-        pg,
-        filterAge,
-        filterGender,
-        filterNation
-      );
+      const data = await getAllMembers(pg, filterValues);
       setMembers(data.rows);
       setPageCount(Math.ceil(data.count / memberPerPage));
       setIsLoading(false);
@@ -59,18 +54,23 @@ const MemberGallery = () => {
 
   useEffect(() => {
     setMembers([]);
+    setCurrentPage(0);
     fetchData(1);
-  }, [filterGender, filterNation, filterAge]);
+  }, [filterValues]);
 
   // navigtaion change page
   const changePage = ({ selected }) => {
     setMembers([]);
+    setCurrentPage(selected);
     fetchData(selected + 1);
+  };
+
+  const filterHandleChange = (e) => {
+    setFilterValues({ ...filterValues, [e.target.name]: e.target.value });
   };
 
   const cardClickHandler = (person) => {
     setPopups((prevPopups) => ({ ...prevPopups, openPopupModel: true }));
-
     setCurrentPerson(person);
   };
 
@@ -159,16 +159,12 @@ const MemberGallery = () => {
               idudcslhka ,ehsia;=j
             </div>
           </div>
-          {/* filter container */}
           <div className="flex flex-col items-center justify-center sm:flex-row mx-36 bg-[#f9f9f9] px-24 md:px-36 py-10 rounded-lg">
-            {/* search form  */}
-            {/* <SearchBar /> */}
-            {/* gender */}
             <select
               className="p-2 mb-5 border-2 border-solid rounded-md w-44 sm:mb-0 sm:mx-5"
-              value={filterGender}
-              onChange={(e) => setFilterGender(e.target.value)}
-              id="gender"
+              value={filterValues.filterGender}
+              onChange={filterHandleChange}
+              name="filterGender"
             >
               {gender.map((item, index) => (
                 <option key={index} value={index === 0 ? "" : index}>
@@ -179,9 +175,9 @@ const MemberGallery = () => {
             {/* nation */}
             <select
               className="p-2 mb-5 border-2 border-solid rounded-md sm:mx-5 sm:mb-0 w-44"
-              value={filterNation}
-              onChange={(e) => setFilterNation(e.target.value)}
-              id="nation"
+              value={filterValues.filterNation}
+              onChange={filterHandleChange}
+              name="filterNation"
             >
               {nation.map((item, index) => (
                 <option key={index} value={index === 0 ? "" : index}>
@@ -191,14 +187,27 @@ const MemberGallery = () => {
             </select>
             {/* age */}
             <select
-              className="p-2 mb-5 border-2 border-solid rounded-md sm:mb-0 w-44"
-              value={filterAge}
-              onChange={(e) => setFilterAge(e.target.value)}
-              id="age"
+              className="p-2 mb-5 border-2 border-solid rounded-md w-44 sm:mb-0 sm:mx-5"
+              value={filterValues.filterAge}
+              onChange={filterHandleChange}
+              name="filterAge"
             >
               {age.map((item, index) => (
                 <option key={index} value={item.value}>
                   {item.text}
+                </option>
+              ))}
+            </select>
+            {/* job */}
+            <select
+              className="p-2 mb-5 border-2 border-solid rounded-md w-44 sm:mb-0 sm:mx-5"
+              value={filterValues.filterJob}
+              onChange={filterHandleChange}
+              name="filterJob"
+            >
+              {professions.map((item, index) => (
+                <option key={index} value={index === 0 ? "" : index}>
+                  {item.value}
                 </option>
               ))}
             </select>
@@ -278,6 +287,7 @@ const MemberGallery = () => {
                 activeClassName={
                   "bg-black text-white  py-3  m-[8px] rounded-[5px]"
                 }
+                forcePage={currentPage}
               />
             </div>
           </div>

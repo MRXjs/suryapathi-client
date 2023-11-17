@@ -57,7 +57,7 @@ const MemberGalleryCard = ({
         } focus:outline-none focus:ring-4 focus:ring-blue-300 font-semibold text-lg px-5 py-4 text-center mr-2 mb-2 w-full duration-300 `}
         onClick={() => cardSelectHandler(person)}
       >
-        {`${person.gender == "ස්ත්‍රී" ? "ඇයව " : "ඔහුව"} ${
+        {`${person.gender == "1" ? "ඇයව " : "ඔහුව"} ${
           isCardSelected(person.id) ? "තෝරා නොගන්න" : "තෝරා ගන්න "
         }`}
       </button>

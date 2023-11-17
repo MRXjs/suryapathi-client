@@ -32,33 +32,9 @@ const BabyNameReqForm = () => {
   }, [paymentMethod]);
 
   const formHandler = async (data) => {
-    const formData = {
-      birthday: `${data.birthYear}-${data.birthMonth}-${data.birthDay}`,
-      birthtime: data.birthTime,
-      gender: JSON.parse(data.gender),
-      city: JSON.parse(data.district),
-      expected_name: data.nameCategory,
-      description: data.description,
-      phone: data.phoneNo,
-      first_name: data.first_name,
-      last_name: data.last_name,
-      payment_method: JSON.parse(data.payment_method),
-      payment_switch: "",
-      email: "",
-    };
-    if (data.payment_method == 0) {
-      setIsLoading(true);
-      formData.payment_switch = "bank transfer";
-      await babyNameCreate(formData);
-      setIsLoading(false);
-      router.push("/payment");
-    } else {
-      setIsLoading(true);
-      formData.payment_switch = "online";
-      formData.email = data.email;
-      await babyNameCreate(formData);
-      setIsLoading(false);
-    }
+    setIsLoading(true);
+    await babyNameCreate(data, router);
+    setIsLoading(false);
   };
 
   return (
@@ -193,7 +169,7 @@ const BabyNameReqForm = () => {
                 className="w-full px-4 py-2 mt-2 rounded-md outline-none ring-1 ring-gray-300 focus:ring-2 focus:ring-teal-300"
               >
                 {nameCategorys.map((item, index) => (
-                  <option key={index} value={item.value}>
+                  <option key={index} value={index}>
                     {item.value}
                   </option>
                 ))}

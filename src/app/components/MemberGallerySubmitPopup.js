@@ -1,10 +1,8 @@
 "use client";
 import Image from "next/image";
 import ReqContactForm from "./ReqContactForm";
-import data from "@/db/data";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { toastError } from "./toast";
 import { proposalCreate } from "../api/proposal";
 import LoadingScreen from "./LoadingScreen";
 
@@ -54,41 +52,12 @@ const MemberGallerySubmitPopup = ({ open, selectedMembers, onClose }) => {
                 );
               })}
             </div>
-
             <div className="flex flex-col items-center justify-center gap-3 mb-5 ">
               <ReqContactForm
                 formSubmit={async (data) => {
-                  let package_type = 1;
-                  if (selectedMembers.length == 5) {
-                    package_type = 2;
-                  } else if (selectedMembers.length == 10) {
-                    package_type = 3;
-                  }
-                  const proposalData = {
-                    phone: data.phone,
-                    first_name: data.first_name,
-                    last_name: data.last_name,
-                    phone: data.phone,
-                    description: data.description,
-                    payment_method: JSON.parse(data.payment_method),
-                    package_type,
-                    selected_members: JSON.stringify(
-                      selectedMembers.map((member) => member.id)
-                    ),
-                  };
-                  if (data.payment_method == 0) {
-                    setIsLoading(true);
-                    proposalData.payment_switch = "bank transfer";
-                    await proposalCreate(proposalData);
-                    setIsLoading(false);
-                    router.push("/payment");
-                  } else {
-                    setIsLoading(true);
-                    proposalData.payment_switch = "online";
-                    proposalData.email = data.email;
-                    await proposalCreate(proposalData);
-                    setIsLoading(false);
-                  }
+                  setIsLoading(true);
+                  await proposalCreate(selectedMembers, data, router);
+                  setIsLoading(false);
                 }}
               />
               <button

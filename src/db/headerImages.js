@@ -5,8 +5,6 @@ import babynameImg1 from "../../public/slider-img/baby-names/1.jpg";
 import babynameImg2 from "../../public/slider-img/baby-names/2.jpg";
 import babynameImg3 from "../../public/slider-img/baby-names/3.jpg";
 import astrologyImg1 from "../../public/slider-img/astrology-service/1.jpg";
-// import astrologyImg2 from "../../public/slider-img/astrology-service/2.jpg";
-// import astrologyImg3 from "../../public/slider-img/astrology-service/3.jpg";
 
 export const weddingImgs = [
   {

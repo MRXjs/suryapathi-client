@@ -57,17 +57,17 @@ export const memberSlid = async () => {
   }
 };
 
-export const getAllMembers = async (
-  pageNumber,
-  filterAge,
-  filterGender,
-  filterNation
-) => {
+export const getAllMembers = async (pageNumber, filterValues) => {
   try {
     const params = new URLSearchParams();
 
-    if (filterGender) params.append("gender", filterGender);
-    if (filterNation) params.append("nation", filterNation);
+    console.log(filterValues.filterAge);
+    if (filterValues.filterGender)
+      params.append("gender", filterValues.filterGender);
+    if (filterValues.filterNation)
+      params.append("nation", filterValues.filterNation);
+    if (filterValues.filterAge) params.append("age", filterValues.filterAge);
+    if (filterValues.filterJob) params.append("job", filterValues.filterJob);
 
     const resp = await axios.get(
       `${
