@@ -21,6 +21,7 @@ import { memberCreate } from "@/app/api/member";
 import { ToastContainer } from "react-toastify";
 import { toastSuccess } from "../toast";
 import "react-toastify/dist/ReactToastify.css";
+import Link from "next/link";
 
 const ProposalMemberRegForm = () => {
   const {
@@ -409,9 +410,22 @@ const ProposalMemberRegForm = () => {
                   type="checkbox"
                   className="w-5 h-5 border border-gray-400 cursor-pointer"
                 />
-                <span className="ml-2 ">
-                  I Accept the Terms of Use & Privacy Policy
-                </span>
+                <div className="ml-2 ">
+                  I Accept the{" "}
+                  <Link
+                    href={"/terms-and-conditions"}
+                    className="inline-block text-lg text-purple-500 transition duration-300 opacity-75 hover:opacity-100"
+                  >
+                    Terms
+                  </Link>{" "}
+                  of Use &{" "}
+                  <Link
+                    href={"/privacy-policy"}
+                    className="inline-block text-lg text-purple-500 transition duration-300 opacity-75 hover:opacity-100"
+                  >
+                    Privacy Policy
+                  </Link>{" "}
+                </div>
               </div>
               {errors.acceptPolicy ? (
                 <FormError error={errors.acceptPolicy.message} />

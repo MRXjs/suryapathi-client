@@ -1,6 +1,12 @@
 export const formValidations = {
   avatar: { required: { message: "ඡායාරූපයක් අවශ්ය වේ" } },
-  name: { required: { message: "නම ඇතුලත් කල යුතුයී." } },
+  name: {
+    required: { message: "නම ඇතුලත් කල යුතුයී." },
+    pattern: {
+      stringPattern: /^\S*$/,
+      message: "නම හිස්තැන් නොමැතිව ඇතුලත් කරන්න.",
+    },
+  },
   birthDay: {
     required: {
       yearMessage: "උපන් දිනය ඇතුලත් කල යුතුයී.",
