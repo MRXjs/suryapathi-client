@@ -1,5 +1,6 @@
 export const weddingServicePricingPlans = [
   {
+    id: 1,
     title: "පලමු පැකෙජය",
     price: 1200,
     item: 1,
@@ -12,6 +13,7 @@ export const weddingServicePricingPlans = [
     planCategory: "weddingService",
   },
   {
+    id: 2,
     title: "දෙවන පැකෙජය",
     price: 3000,
     item: 5,
@@ -24,6 +26,7 @@ export const weddingServicePricingPlans = [
     planCategory: "weddingService",
   },
   {
+    id: 3,
     title: "තෙවන පැකෙජය",
     price: 5000,
     item: 10,
@@ -39,6 +42,7 @@ export const weddingServicePricingPlans = [
 
 export const babyNamesPricingPlans = [
   {
+    id: 1,
     title: "පලමු පැකෙජය",
     price: 1100,
     currency: "Rs",

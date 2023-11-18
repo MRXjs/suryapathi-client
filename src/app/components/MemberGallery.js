@@ -307,18 +307,18 @@ const MemberGallery = () => {
             </button>
           </div>
         </div>
-        <MemberGallerySubmitPopup
-          open={popups.openMemberGallerySubmit}
-          selectedMembers={selectedCards}
-          onClose={() => {
-            setPopups((prevPopups) => ({
-              ...prevPopups,
-              openMemberGallerySubmit: false,
-            })),
-              setIsStatusOn(true);
-          }}
-        />
       </div>
+      <MemberGallerySubmitPopup
+        open={popups.openMemberGallerySubmit}
+        selectedMembers={selectedCards}
+        onClose={() => {
+          setPopups((prevPopups) => ({
+            ...prevPopups,
+            openMemberGallerySubmit: false,
+          })),
+            setIsStatusOn(true);
+        }}
+      />
     </div>
   );
 };

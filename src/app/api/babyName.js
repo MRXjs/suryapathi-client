@@ -15,6 +15,7 @@ export const babyNameCreate = async (data, router) => {
     payment_method: JSON.parse(data.payment_method),
     payment_switch: "",
     email: "",
+    package_type: 1,
   };
 
   if (data.payment_method == 0) {

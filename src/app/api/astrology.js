@@ -3,7 +3,7 @@ import { toastError, toastSuccess } from "../components/toast";
 
 export const astrologyCreate = async (service, data, router) => {
   const astrologyData = {
-    service: service.id,
+    package_type: service.id,
     first_name: data.first_name,
     last_name: data.last_name,
     phone: data.phone,
