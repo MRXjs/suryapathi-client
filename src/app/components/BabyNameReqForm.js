@@ -24,6 +24,7 @@ const BabyNameReqForm = () => {
     handleSubmit,
     formState: { errors },
     watch,
+    reset,
   } = useForm();
 
   const paymentMethod = watch("payment_method");
@@ -35,6 +36,7 @@ const BabyNameReqForm = () => {
   const formHandler = async (data) => {
     setIsLoading(true);
     await babyNameCreate(data, router);
+    reset();
     setIsLoading(false);
   };
 
@@ -102,19 +104,41 @@ const BabyNameReqForm = () => {
 
             <div className="mt-5">
               <span>උපන් වෙලාව</span>
-              <input
-                step="2"
-                type="time"
-                id="birthTime"
-                name="birthTime"
-                {...register("birthTime", {
-                  required: formValidations.birthTime.required.message,
-                })}
-                className="w-full px-4 py-2 mt-2 rounded-md outline-none ring-1 ring-gray-300 focus:ring-2 focus:ring-teal-300"
-              />
-              {errors.birthTime ? (
-                <FormError error={errors.birthTime.message} />
-              ) : null}
+              <div className="grid grid-cols-2 gap-3">
+                <div className="">
+                  <input
+                    type="number"
+                    id="birthHour"
+                    name="birthHour"
+                    placeholder="පැය"
+                    {...register("birthHour", {
+                      required: formValidations.birthTime.required.HourMessage,
+                      maxLength: 2,
+                    })}
+                    className="w-full px-4 py-2 mt-2 rounded-md outline-none ring-1 ring-gray-300 focus:ring-2 focus:ring-teal-300"
+                  />
+                  {errors.birthHour ? (
+                    <FormError error={errors.birthHour.message} />
+                  ) : null}
+                </div>
+                <div className="">
+                  <input
+                    type="number"
+                    id="birthMinute"
+                    name="birthMinute"
+                    placeholder="විනාඩි"
+                    {...register("birthMinute", {
+                      required:
+                        formValidations.birthTime.required.MinuteMessage,
+                      maxLength: 2,
+                    })}
+                    className="w-full px-4 py-2 mt-2 rounded-md outline-none ring-1 ring-gray-300 focus:ring-2 focus:ring-teal-300"
+                  />
+                  {errors.birthMinute ? (
+                    <FormError error={errors.birthMinute.message} />
+                  ) : null}
+                </div>
+              </div>
             </div>
 
             <div className="mt-5">

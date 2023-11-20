@@ -18,8 +18,6 @@ import FormError from "../FormError";
 import { isOlderThan16 } from "../functions";
 import LoadingScreen from "../LoadingScreen";
 import { memberCreate } from "@/app/api/member";
-import { ToastContainer } from "react-toastify";
-import { toastSuccess } from "../toast";
 import "react-toastify/dist/ReactToastify.css";
 import Link from "next/link";
 

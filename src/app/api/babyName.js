@@ -1,10 +1,15 @@
 import axios from "axios";
 import { toastError, toastSuccess } from "../components/toast";
+import { addLeadingZero } from "../components/functions";
 
 export const babyNameCreate = async (data, router) => {
   const babyNameData = {
-    birthday: `${data.birthYear}-${data.birthMonth}-${data.birthDay}`,
-    birthtime: data.birthTime,
+    birthday: `${data.birthYear}-${addLeadingZero(
+      data.birthMonth
+    )}-${addLeadingZero(data.birthDay)}`,
+    birthtime: `${addLeadingZero(data.birthHour)}:${addLeadingZero(
+      data.birthMinute
+    )}`,
     gender: JSON.parse(data.gender),
     city: JSON.parse(data.district),
     expected_name: JSON.parse(data.nameCategory),

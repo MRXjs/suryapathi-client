@@ -66,3 +66,7 @@ export const getProfessions = (job) => {
   });
   return value;
 };
+
+export const addLeadingZero = (number) => {
+  return number < 10 ? "0" + number : number.toString();
+};

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { toastError, toastSuccess } from "../components/toast";
-import { dataURItoFile } from "../components/functions";
+import { addLeadingZero, dataURItoFile } from "../components/functions";
 
 export const memberCreate = async (data) => {
   let formData = new FormData();
@@ -13,7 +13,9 @@ export const memberCreate = async (data) => {
   formData.append("full_name", data.name);
   formData.append(
     "birthday",
-    `${data.birthYear}-${data.birthMonth}-${data.birthDay}`
+    `${data.birthYear}-${addLeadingZero(data.birthMonth)}-${addLeadingZero(
+      data.birthDay
+    )}`
   );
   formData.append("phone", data.phoneNo);
   formData.append("nic", data.nicNo);
@@ -28,6 +30,12 @@ export const memberCreate = async (data) => {
   formData.append("job", data.profession);
   formData.append("salary", data.monthlyIncome);
   formData.append("gender", data.gender);
+
+  console.log(
+    `${data.birthYear}-${addLeadingZero(data.birthMonth)}-${addLeadingZero(
+      data.birthDay
+    )}`
+  );
 
   try {
     const resp = await axios.post(
