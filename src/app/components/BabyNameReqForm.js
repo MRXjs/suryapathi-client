@@ -103,7 +103,7 @@ const BabyNameReqForm = () => {
             </div>
 
             <div className="mt-5">
-              <span>උපන් වෙලාව</span>
+              <span>උපන් වෙලාව (පැය 24 ඔරලෝසුවෙන් ඇතුළු කරන්න)</span>
               <div className="grid grid-cols-2 gap-3">
                 <div className="">
                   <input

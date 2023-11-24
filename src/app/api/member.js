@@ -31,12 +31,6 @@ export const memberCreate = async (data) => {
   formData.append("salary", data.monthlyIncome);
   formData.append("gender", data.gender);
 
-  console.log(
-    `${data.birthYear}-${addLeadingZero(data.birthMonth)}-${addLeadingZero(
-      data.birthDay
-    )}`
-  );
-
   try {
     const resp = await axios.post(
       `${process.env.NEXT_PUBLIC_API_URL}/member/create`,
