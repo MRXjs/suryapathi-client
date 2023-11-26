@@ -1,15 +1,14 @@
 import axios from "axios";
 import { toastError, toastSuccess } from "../components/toast";
-import { addLeadingZero, dataURItoFile } from "../components/functions";
+import {
+  addLeadingZero,
+  canvasRefToImg,
+  dataURItoFile,
+} from "../components/functions";
 
-export const memberCreate = async (data) => {
+export const memberCreate = async (avatarEditorRef, data) => {
   let formData = new FormData();
-
-  formData.append(
-    "image",
-    await dataURItoFile(localStorage.getItem("avatar"), `${data.name}.jpg`)
-  );
-
+  formData.append("image", await canvasRefToImg(avatarEditorRef));
   formData.append("full_name", data.name);
   formData.append(
     "birthday",

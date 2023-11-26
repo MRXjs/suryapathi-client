@@ -70,3 +70,22 @@ export const getProfessions = (job) => {
 export const addLeadingZero = (number) => {
   return number < 10 ? "0" + number : number.toString();
 };
+
+export const canvasRefToImg = (avatarEditorRef) => {
+  if (avatarEditorRef.current) {
+    const canvas = avatarEditorRef.current.getImageScaledToCanvas();
+    return new Promise((resolve) => {
+      canvas.toBlob((blob) => {
+        if (blob) {
+          const file = new File([blob], "avatar.jpeg", {
+            type: "image/jpeg",
+            lastModified: Date.now(),
+          });
+          resolve(file);
+        } else {
+          resolve(null);
+        }
+      });
+    });
+  }
+};

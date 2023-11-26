@@ -19,7 +19,7 @@ const AstrologyPopupModel = ({ open, service, onClose }) => {
       {isLoading ? <LoadingScreen /> : null}
       {/*container */}
       <div
-        className="flex items-center justify-center flex-col w-screen md:w-[60%] lg:w-[50%] xl:w-[40%] h-full p-5 my-10 overflow-y-auto bg-white "
+        className="flex items-center justify-center flex-col w-screen md:w-[60%] lg:w-[50%] xl:w-[40%] h-full p-5 my-10 overflow-y-auto bg-white  "
         onClick={(e) => {
           e.stopPropagation();
         }}
@@ -31,11 +31,11 @@ const AstrologyPopupModel = ({ open, service, onClose }) => {
           x
         </p>
 
-        <h1 className="mt-20 mb-3 text-2xl font-bold tracking-tight text-center text-gray-900">
+        <h1 className="mb-3 text-2xl font-bold tracking-tight text-center text-gray-900 mt-[500px] sm:mt-48">
           {service.title}
         </h1>
 
-        <p className="m-2 mb-3 text-xl font-normal text-center text-gray-700">
+        <p className="m-2 mb-3 text-xl font-normal text-center text-gray-700 ">
           {typeof service.price == "number"
             ? `අයකිරිම රුපියල් ${service.price}`
             : service.price}
@@ -44,6 +44,7 @@ const AstrologyPopupModel = ({ open, service, onClose }) => {
         {typeof service.price == "number" ? (
           <div className="mx-3 my-3">
             <ReqContactForm
+              astrology={true}
               formSubmit={async (data) => {
                 setIsLoading(true);
                 await astrologyCreate(service, data, router);

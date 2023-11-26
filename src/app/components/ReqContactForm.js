@@ -5,8 +5,9 @@ import { useForm } from "react-hook-form";
 import { formValidations } from "@/db/formValidations";
 import FormError from "./FormError";
 import Link from "next/link";
+import { isOlderThan16 } from "./functions";
 
-const ReqContactForm = ({ formSubmit }) => {
+const ReqContactForm = ({ astrology, formSubmit }) => {
   const [isEmail, setIsEmail] = useState(0);
 
   const {
@@ -26,6 +27,92 @@ const ReqContactForm = ({ formSubmit }) => {
   return (
     <>
       <form onSubmit={handleSubmit(formSubmit)}>
+        {/* astrology  */}
+        {astrology ? (
+          <div>
+            <div className="mt-5">
+              <span>උපන් දිනය</span>
+              <div className="grid grid-cols-3 gap-2 ">
+                <input
+                  type="number"
+                  id="birthYear"
+                  name="birthYear"
+                  {...register("birthYear", {
+                    required: formValidations.birthDay.required.yearMessage,
+                    maxLength: 4,
+                    validate: (fieldValue) => isOlderThan16(fieldValue),
+                  })}
+                  placeholder="අවුරුද්ද"
+                  className="w-full px-4 py-2 mt-2 rounded-md outline-none ring-1 ring-gray-300 focus:ring-2 focus:ring-teal-300"
+                />
+                <input
+                  type="number"
+                  id="birthMonth"
+                  name="birthMonth"
+                  {...register("birthMonth", {
+                    required: formValidations.birthDay.required.monthMessage,
+                    maxLength: 2,
+                  })}
+                  placeholder="මාසය"
+                  className="w-full px-4 py-2 mt-2 rounded-md outline-none ring-1 ring-gray-300 focus:ring-2 focus:ring-teal-300"
+                />
+                <input
+                  type="number"
+                  id="birthDay"
+                  name="birthDay"
+                  {...register("birthDay", {
+                    required: formValidations.birthDay.required.dayMessage,
+                    maxLength: 2,
+                  })}
+                  placeholder="දිනය"
+                  className="w-full px-4 py-2 mt-2 rounded-md outline-none ring-1 ring-gray-300 focus:ring-2 focus:ring-teal-300"
+                />
+              </div>
+              {errors.birthYear ? (
+                <FormError error={errors.birthYear.message} />
+              ) : null}
+              {errors.birthMonth || errors.birthDay ? (
+                <FormError
+                  error={
+                    errors.birthMonth
+                      ? errors.birthMonth.message
+                      : errors.birthDay.message
+                  }
+                />
+              ) : null}
+            </div>
+            <div className="mt-5">
+              <span>උපන් වේලාව</span>
+              <input
+                id="birthTime"
+                name="birthTime"
+                type="time"
+                className="w-full px-4 py-2 mt-2 rounded-md outline-none ring-1 ring-gray-300 focus:ring-2 focus:ring-teal-300"
+                {...register("birthTime", {
+                  required: "උපන් වේලාව ඇතුළත් කරන්න",
+                })}
+              />
+              {errors.birthTime ? (
+                <FormError error={errors.birthTime.message} />
+              ) : null}
+            </div>
+            <div className="mt-5">
+              <span>උපන් ස්තානය</span>
+              <input
+                id="birthPlace"
+                name="birthPlace"
+                type="text"
+                className="w-full px-4 py-2 mt-2 rounded-md outline-none ring-1 ring-gray-300 focus:ring-2 focus:ring-teal-300"
+                {...register("birthPlace", {
+                  required: formValidations.birthPlace.required.message,
+                })}
+              />
+            </div>
+            {errors.birthPlace ? (
+              <FormError error={errors.birthPlace.message} />
+            ) : null}
+          </div>
+        ) : null}
         <div className="mt-5">
           <div className="flex items-center justify-center ">
             <div className="shrink-0"></div>
@@ -48,7 +135,7 @@ const ReqContactForm = ({ formSubmit }) => {
               },
             })}
             placeholder="දුරකතන අංකය"
-            className="w-full px-2 py-1 rounded-md outline-none ring-1 ring-gray-300 focus:ring-2 focus:ring-teal-300"
+            className="w-full px-4 py-2 mt-2 rounded-md outline-none ring-1 ring-gray-300 focus:ring-2 focus:ring-teal-300"
           />
           {errors.phone ? <FormError error={errors.phone.message} /> : null}
         </div>

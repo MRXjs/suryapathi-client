@@ -36,6 +36,9 @@ export const formValidations = {
       MinuteMessage: "උපන් විනාඩිය ඇතුලත්කල යුතුයී.",
     },
   },
+  birthPlace: {
+    required: { message: "උපන් ස්ථානය ඇතුලත්කල යුතුයී." },
+  },
   email: {
     required: { message: "ඔබේ විද්‍යුත් තැපැල් ලිපිනය ඇතුළත් කළ යුතුය." },
   },

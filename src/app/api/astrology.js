@@ -1,8 +1,14 @@
 import axios from "axios";
 import { toastError, toastSuccess } from "../components/toast";
+import { addLeadingZero } from "../components/functions";
 
 export const astrologyCreate = async (service, data, router) => {
   const astrologyData = {
+    // birthday: `${data.birthYear}-${addLeadingZero(
+    //   data.birthMonth
+    // )}-${addLeadingZero(data.birthDay)}`,
+    // birthTime: data.birthTime,
+    // birthplace: birthplace,
     package_type: service.id,
     first_name: data.first_name,
     last_name: data.last_name,
@@ -13,13 +19,12 @@ export const astrologyCreate = async (service, data, router) => {
     email: "",
   };
 
+  const url = `${process.env.NEXT_PUBLIC_API_URL}/astrology/create`;
+
   if (astrologyData.payment_method == 0) {
     astrologyData.payment_switch = "bank transfer";
     try {
-      const resp = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/astrology/create`,
-        astrologyData
-      );
+      const resp = await axios.post(url, astrologyData);
       router.push("/payment");
       toastSuccess(resp.data.message);
     } catch (error) {
@@ -29,10 +34,7 @@ export const astrologyCreate = async (service, data, router) => {
     astrologyData.payment_switch = "online";
     astrologyData.email = data.email;
     try {
-      const resp = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/astrology/create`,
-        astrologyData
-      );
+      const resp = await axios.post(url, astrologyData);
       router.push(resp.data.url);
     } catch (error) {
       toastError(error.response ? error.response.data.error : error.message);

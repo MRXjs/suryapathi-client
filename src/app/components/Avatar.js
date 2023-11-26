@@ -4,20 +4,12 @@ import React, { useRef, useState } from "react";
 import profileAvatar from "../../../public/profile-avatar.png";
 import AvatarEditor from "react-avatar-editor";
 
-const Avatar = ({ selectedAvatar }) => {
-  const editorRef = useRef();
+const Avatar = ({ editorRef, selectedAvatar }) => {
   const [zoom, setZoom] = useState(1);
 
   const handleScale = (e) => {
     const scale = parseFloat(e.target.value);
     setZoom(scale);
-  };
-
-  const handleSave = () => {
-    if (editorRef.current) {
-      const canvas = editorRef.current.getImageScaledToCanvas();
-      localStorage.setItem("avatar", canvas.toDataURL("avatar/png"));
-    }
   };
 
   return (
@@ -26,7 +18,6 @@ const Avatar = ({ selectedAvatar }) => {
         <>
           <AvatarEditor
             ref={editorRef}
-            onMouseUp={handleSave}
             image={URL.createObjectURL(selectedAvatar)}
             width={300}
             height={300}
@@ -35,7 +26,6 @@ const Avatar = ({ selectedAvatar }) => {
             scale={zoom}
             rotate={0}
             style={{ width: "320px", height: "320px" }}
-            onImageReady={handleSave}
           />
           <div className="flex items-center justify-center mt-5">
             <span>Zoom</span>
@@ -47,8 +37,6 @@ const Avatar = ({ selectedAvatar }) => {
               max="3"
               step="0.01"
               defaultValue="1"
-              onTouchEnd={handleSave}
-              onMouseUp={handleSave}
             />
           </div>
         </>
