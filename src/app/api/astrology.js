@@ -4,11 +4,11 @@ import { addLeadingZero } from "../components/functions";
 
 export const astrologyCreate = async (service, data, router) => {
   const astrologyData = {
-    // birthday: `${data.birthYear}-${addLeadingZero(
-    //   data.birthMonth
-    // )}-${addLeadingZero(data.birthDay)}`,
-    // birthTime: data.birthTime,
-    // birthplace: birthplace,
+    birthday: `${data.birthYear}-${addLeadingZero(
+      data.birthMonth
+    )}-${addLeadingZero(data.birthDay)}`,
+    birthtime: data.birthTime,
+    birthplace: JSON.parse(data.birthPlace),
     package_type: service.id,
     first_name: data.first_name,
     last_name: data.last_name,

@@ -103,42 +103,19 @@ const BabyNameReqForm = () => {
             </div>
 
             <div className="mt-5">
-              <span>උපන් වෙලාව (පැය 24 ඔරලෝසුවෙන් ඇතුළු කරන්න)</span>
-              <div className="grid grid-cols-2 gap-3">
-                <div className="">
-                  <input
-                    type="number"
-                    id="birthHour"
-                    name="birthHour"
-                    placeholder="පැය"
-                    {...register("birthHour", {
-                      required: formValidations.birthTime.required.HourMessage,
-                      maxLength: 2,
-                    })}
-                    className="w-full px-4 py-2 mt-2 rounded-md outline-none ring-1 ring-gray-300 focus:ring-2 focus:ring-teal-300"
-                  />
-                  {errors.birthHour ? (
-                    <FormError error={errors.birthHour.message} />
-                  ) : null}
-                </div>
-                <div className="">
-                  <input
-                    type="number"
-                    id="birthMinute"
-                    name="birthMinute"
-                    placeholder="විනාඩි"
-                    {...register("birthMinute", {
-                      required:
-                        formValidations.birthTime.required.MinuteMessage,
-                      maxLength: 2,
-                    })}
-                    className="w-full px-4 py-2 mt-2 rounded-md outline-none ring-1 ring-gray-300 focus:ring-2 focus:ring-teal-300"
-                  />
-                  {errors.birthMinute ? (
-                    <FormError error={errors.birthMinute.message} />
-                  ) : null}
-                </div>
-              </div>
+              <span>උපන් වේලාව</span>
+              <input
+                id="birthTime"
+                name="birthTime"
+                type="time"
+                className="w-full px-4 py-2 mt-2 rounded-md outline-none ring-1 ring-gray-300 focus:ring-2 focus:ring-teal-300"
+                {...register("birthTime", {
+                  required: formValidations.birthTime.required.message,
+                })}
+              />
+              {errors.birthTime ? (
+                <FormError error={errors.birthTime.message} />
+              ) : null}
             </div>
 
             <div className="mt-5">

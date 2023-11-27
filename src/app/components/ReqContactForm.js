@@ -6,6 +6,7 @@ import { formValidations } from "@/db/formValidations";
 import FormError from "./FormError";
 import Link from "next/link";
 import { isOlderThan16 } from "./functions";
+import { districts } from "@/db/selecterOptions";
 
 const ReqContactForm = ({ astrology, formSubmit }) => {
   const [isEmail, setIsEmail] = useState(0);
@@ -89,7 +90,7 @@ const ReqContactForm = ({ astrology, formSubmit }) => {
                 type="time"
                 className="w-full px-4 py-2 mt-2 rounded-md outline-none ring-1 ring-gray-300 focus:ring-2 focus:ring-teal-300"
                 {...register("birthTime", {
-                  required: "උපන් වේලාව ඇතුළත් කරන්න",
+                  required: formValidations.birthTime.required.message,
                 })}
               />
               {errors.birthTime ? (
@@ -98,19 +99,26 @@ const ReqContactForm = ({ astrology, formSubmit }) => {
             </div>
             <div className="mt-5">
               <span>උපන් ස්තානය</span>
-              <input
+              <select
                 id="birthPlace"
                 name="birthPlace"
-                type="text"
-                className="w-full px-4 py-2 mt-2 rounded-md outline-none ring-1 ring-gray-300 focus:ring-2 focus:ring-teal-300"
                 {...register("birthPlace", {
-                  required: formValidations.birthPlace.required.message,
+                  validate: (fieldValue) => {
+                    return fieldValue !== "0" || "උපන් දිස්ත්‍රීකය තෝරාගන්න.";
+                  },
                 })}
-              />
+                className="w-full px-4 py-2 mt-2 rounded-md outline-none cursor-pointer ring-1 ring-gray-300 focus:ring-2 focus:ring-teal-300"
+              >
+                {districts.map((district, index) => (
+                  <option key={index} value={index} className="cursor-pointer">
+                    {district.value}
+                  </option>
+                ))}
+              </select>
+              {errors.birthPlace ? (
+                <FormError error={errors.birthPlace.message} />
+              ) : null}
             </div>
-            {errors.birthPlace ? (
-              <FormError error={errors.birthPlace.message} />
-            ) : null}
           </div>
         ) : null}
         <div className="mt-5">

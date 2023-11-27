@@ -31,10 +31,7 @@ export const formValidations = {
   },
   address: { required: { message: "ලිපිනය ඇතුලත් කල යුතුයී." } },
   birthTime: {
-    required: {
-      HourMessage: "උපන් පැය  ඇතුලත්කල යුතුයී.",
-      MinuteMessage: "උපන් විනාඩිය ඇතුලත්කල යුතුයී.",
-    },
+    required: { message: "උපන් වේලාව ඇතුළත් කරන්න" },
   },
   birthPlace: {
     required: { message: "උපන් ස්ථානය ඇතුලත්කල යුතුයී." },
