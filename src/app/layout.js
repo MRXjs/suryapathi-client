@@ -2,10 +2,11 @@ import Head from "next/head";
 import "./globals.css";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
+import Script from "next/script";
 
 export const metadata = {
   title: "සුර්යාපති",
-  description: "Astrology serivcerp",
+  description: "Astrology service",
 };
 
 export default function RootLayout({ children }) {
@@ -31,6 +32,22 @@ export default function RootLayout({ children }) {
         />
         <link rel="manifest" href="/site.webmanifest" />
       </Head>
+
+      {/* google analytics  */}
+      <Script
+        strategy="afterInteractive"
+        async
+        src="https://www.googletagmanager.com/gtag/js?id=G-Z26Y72B41T"
+      />
+      <Script id="google-analytics" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-Z26Y72B41T');`}
+      </Script>
+
       <body className="bg-stone-100">
         <ToastContainer
           position="top-center"
