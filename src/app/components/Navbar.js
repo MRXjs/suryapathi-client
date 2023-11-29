@@ -1,4 +1,5 @@
 "use client";
+import { NavLinks } from "@/db/navBarData";
 import Link from "next/link";
 import React, { useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -24,42 +25,15 @@ const Navbar = () => {
           </div>
           <div className="hidden lg:block">
             <div className="flex items-center ml-4 space-x-4">
-              <Link
-                href={"/"}
-                className="p-2 text-2xl text-white rounded-lg hover:bg-white hover:text-black font-sinha"
-              >
-                uq,amsgqj
-              </Link>
-              <Link
-                href={"/proposal"}
-                className="p-2 text-2xl text-white rounded-lg hover:bg-white hover:text-black font-sinha"
-              >
-                ux., fiajh
-              </Link>
-              <Link
-                href={"/babyname"}
-                className="p-2 text-2xl text-white rounded-lg hover:bg-white hover:text-black font-sinha"
-              >
-                {"<ore kï"}
-              </Link>
-              <Link
-                href={"/astrology"}
-                className="p-2 text-2xl text-white rounded-lg hover:bg-white hover:text-black font-sinha"
-              >
-                fcda;SIh fiajdjka
-              </Link>
-              <Link
-                href={"/about"}
-                className="p-2 text-2xl text-white rounded-lg hover:bg-white hover:text-black font-sinha"
-              >
-                wms .ek
-              </Link>
-              <Link
-                href={"/contact"}
-                className="p-2 text-2xl text-white rounded-lg hover:bg-white hover:text-black font-sinha"
-              >
-                wmsj iïnkao lr.kak
-              </Link>
+              {NavLinks.map((navLink, index) => (
+                <Link
+                  key={index}
+                  href={navLink.url}
+                  className="p-2 text-xl text-white rounded-lg xl:text-2xl hover:bg-white hover:text-black font-sinha"
+                >
+                  {navLink.title}
+                </Link>
+              ))}
             </div>
           </div>
           <div className="flex items-center lg:hidden">
@@ -85,42 +59,15 @@ const Navbar = () => {
       {isClick && (
         <div className="lg:hidden">
           <div className="flex flex-col items-center justify-center px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            <Link
-              href={"/"}
-              className="p-2 text-2xl text-white rounded-lg hover:bg-white hover:text-black font-sinha"
-            >
-              uq,amsgqj
-            </Link>
-            <Link
-              href={"/proposal"}
-              className="p-2 text-2xl text-white rounded-lg hover:bg-white hover:text-black font-sinha"
-            >
-              ux., fiajh
-            </Link>
-            <Link
-              href={"/babyname"}
-              className="p-2 text-2xl text-white rounded-lg hover:bg-white hover:text-black font-sinha"
-            >
-              {"<ore kï"}
-            </Link>
-            <Link
-              href={"/astrology"}
-              className="p-2 text-2xl text-white rounded-lg hover:bg-white hover:text-black font-sinha"
-            >
-              fcda;SIh fiajdjka
-            </Link>
-            <Link
-              href={"/about"}
-              className="p-2 text-2xl text-white rounded-lg hover:bg-white hover:text-black font-sinha"
-            >
-              wms .ek
-            </Link>
-            <Link
-              href={"/contact"}
-              className="p-2 text-2xl text-white rounded-lg hover:bg-white hover:text-black font-sinha"
-            >
-              wmsj iïnkao lr.kak
-            </Link>
+            {NavLinks.map((navLink, index) => (
+              <Link
+                key={index}
+                href={navLink.url}
+                className="p-2 text-2xl text-white rounded-lg hover:bg-white hover:text-black font-sinha"
+              >
+                {navLink.title}
+              </Link>
+            ))}
           </div>
         </div>
       )}
