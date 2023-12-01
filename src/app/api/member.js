@@ -61,8 +61,6 @@ export const memberSlid = async () => {
 export const getAllMembers = async (pageNumber, filterValues) => {
   try {
     const params = new URLSearchParams();
-
-    console.log(filterValues.filterAge);
     if (filterValues.filterGender)
       params.append("gender", filterValues.filterGender);
     if (filterValues.filterNation)

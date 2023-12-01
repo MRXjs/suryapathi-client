@@ -5,8 +5,7 @@ export const weddingServicePricingPlans = [
     price: 1200,
     item: 1,
     currency: "Rs",
-    description:
-      "Aliqua tempor laboris quis aliquip incididunt nostrud duis anim cillum consequat.",
+    description: "",
     feachers: ["එක් අයෙකුගෙ තොරතුරු ලබාගත හැක "],
     cta: "මිලදී ගන්න ",
     mostPopular: false,
@@ -18,8 +17,7 @@ export const weddingServicePricingPlans = [
     price: 3000,
     item: 5,
     currency: "Rs",
-    description:
-      "Aliqua tempor laboris quis aliquip incididunt nostrud duis anim cillum consequat.",
+    description: "",
     feachers: ["පස් දෙනෙකුගෙ තොරතුරු ලබාගත හැක "],
     cta: "මිලදී ගන්න ",
     mostPopular: false,
@@ -31,8 +29,7 @@ export const weddingServicePricingPlans = [
     price: 5000,
     item: 10,
     currency: "Rs",
-    description:
-      "Aliqua tempor laboris quis aliquip incididunt nostrud duis anim cillum consequat.",
+    description: "",
     feachers: ["දහා දෙනෙකුගෙ තොරතුරු ලබාගත හැක "],
     cta: "මිලදී ගන්න ",
     mostPopular: true,

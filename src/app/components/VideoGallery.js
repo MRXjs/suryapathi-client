@@ -1,34 +1,59 @@
 "use client";
-import { videos } from "@/db/videoGalleryData";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { GrLinkNext, GrLinkPrevious } from "react-icons/gr";
 import ReactPaginate from "react-paginate";
+import { getAllVideo } from "../api/videoGallery";
+import { toastError } from "./toast";
+import LoadingScreen from "./LoadingScreen";
+import YouTube from "react-youtube";
 
 const VideoGallery = () => {
+  const [videos, setVideos] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [pageCount, setPageCount] = useState(5);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const onPageChangeHandler = () => {
-    console.log("page was changed!");
+  // fetch data
+  const fetchData = async (pageNumber) => {
+    try {
+      setIsLoading(true);
+      const data = await getAllVideo(pageNumber);
+      setVideos(data.rows);
+      setPageCount(Math.ceil(data.count / 10));
+      setIsLoading(false);
+    } catch (error) {
+      toastError(error);
+    }
+  };
+
+  useEffect(() => {
+    setVideos([]);
+    setCurrentPage(0);
+    fetchData(1);
+  }, []);
+
+  const onPageChangeHandler = ({ selected }) => {
+    setVideos([]);
+    setCurrentPage(selected);
+    fetchData(selected + 1);
+  };
+
+  const youtubeOpts = {
+    height: "196.875",
+    width: "350",
   };
 
   return (
     <div>
+      {isLoading ? <LoadingScreen /> : null}
       <div className="flex flex-wrap justify-center min-h-[50vh] gap-10 xl:">
         {videos.map((video, index) => (
-          <div key={index} className="max-w-sm bg-white rounded-lg shadow-lg">
-            <a href="#!">
-              <iframe
-                width="350"
-                height="196.875"
-                src="https://www.youtube.com/embed/lw6J8vpcJPE?si=mdk9lskLZKrBuYyk"
-                title="YouTube video player"
-                frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowfullscreen
-              ></iframe>
-            </a>
-            <div className="p-6 min-h-20">
+          <div
+            key={index}
+            className="bg-white rounded-lg shadow-lg w-[351px] h-[350px]"
+          >
+            <YouTube videoId={video.video_id} opts={youtubeOpts} />
+            <div className="w-full h-auto p-3">
               <h5 className="mb-2 text-xl font-medium text-gray-900">
                 {video.title}
               </h5>
