@@ -3,8 +3,6 @@ import { toastError, toastSuccess } from "../components/toast";
 import { addLeadingZero } from "../components/functions";
 
 export const babyNameCreate = async (data, router) => {
-  console.log(data);
-
   const babyNameData = {
     birthday: `${data.birthYear}-${addLeadingZero(
       data.birthMonth

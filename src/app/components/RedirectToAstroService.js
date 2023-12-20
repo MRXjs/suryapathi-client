@@ -36,7 +36,7 @@ const RedirectToAstroService = ({ serviceIndex, btnText }) => {
     <div>
       <button
         href="#_"
-        class="inline-flex items-center justify-center w-full px-6 py-3 mb-2 text-lg text-white bg-red-500 rounded-md hover:bg-red-400 sm:w-auto sm:mb-0 text-center"
+        className="inline-flex items-center justify-center w-full px-6 py-3 mb-2 text-lg text-center text-white bg-red-500 rounded-md hover:bg-red-400 sm:w-auto sm:mb-0"
         data-primary="green-400"
         data-rounded="rounded-2xl"
         onClick={() => setOpenPopupModel(true)}

@@ -17,8 +17,8 @@ const Jothishya = () => {
         </div>
       </div>
       <div className="flex flex-wrap items-start justify-center">
-        <List ListItems={services} listTitle={"අප සපයන සේවාවන්."} />
-        <List ListItems={auspicious} listTitle={"සුබ නැකැත් ලබාදීම."} />
+        <List ListItems={services} listTitle={"wm imhk fiajdjka"} />
+        <List ListItems={auspicious} listTitle={"iqn kele;a ,nd§u"} />
       </div>
       <Footer />
     </>

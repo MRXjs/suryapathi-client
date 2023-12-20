@@ -19,9 +19,9 @@ const MemberGallerySubmitPopup = ({ open, selectedMembers, onClose }) => {
         className="fixed top-0 bottom-0 left-0 right-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
         onClick={onClose}
       >
-        <div className="flex items-center justify-center w-screen md:w-[60%] lg:w-[50%] xl:w-[40%] h-full p-5 my-10 overflow-y-auto bg-white">
+        <div className="flex items-center justify-center flex-col w-screen md:w-[60%] lg:w-[50%] xl:w-[40%] h-full p-5 my-10  overflow-y-auto bg-white">
           <div
-            className=""
+            className="sm:mt-36 "
             onClick={(e) => {
               e.stopPropagation();
             }}
@@ -33,7 +33,9 @@ const MemberGallerySubmitPopup = ({ open, selectedMembers, onClose }) => {
               x
             </p>
 
-            <h1 className="text-xl text-center mt-96 sm:mt-3">ඔබ තෝරාගත් අය</h1>
+            <h1 className="mb-3 text-xl text-center mt-96 sm:mt-3">
+              ඔබ තෝරාගත් අය
+            </h1>
             <div className="flex flex-row flex-wrap items-center justify-center gap-3 ">
               {selectedMembers.map((selectedMember) => {
                 return (
@@ -51,6 +53,9 @@ const MemberGallerySubmitPopup = ({ open, selectedMembers, onClose }) => {
                   </div>
                 );
               })}
+            </div>
+            <div className="mt-5 text-xl font-semibold text-center text-green-700">
+              අයකිරිම Rs {selectedMembers.length * 1000}
             </div>
             <div className="flex flex-col items-center justify-center gap-3 mb-5 ">
               <ReqContactForm

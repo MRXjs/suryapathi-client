@@ -2,12 +2,6 @@ import axios from "axios";
 import { toastError, toastSuccess } from "../components/toast";
 
 export const proposalCreate = async (selectedMembers, data, router) => {
-  let package_type = 1;
-  if (selectedMembers.length == 5) {
-    package_type = 2;
-  } else if (selectedMembers.length == 10) {
-    package_type = 3;
-  }
   const proposalData = {
     phone: data.phone,
     first_name: data.first_name,
@@ -15,7 +9,6 @@ export const proposalCreate = async (selectedMembers, data, router) => {
     phone: data.phone,
     description: data.description,
     payment_method: JSON.parse(data.payment_method),
-    package_type,
     payment_switch: "",
     selected_members: JSON.stringify(
       selectedMembers.map((member) => member.id)

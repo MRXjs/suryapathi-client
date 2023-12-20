@@ -67,8 +67,13 @@ const MemberSlider = () => {
 
   return (
     <>
+      <div className="flex items-center justify-center">
+        <span className="mt-10 text-6xl text-center font-sinha">
+          kj;u fhdackd
+        </span>
+      </div>
       {isLoading ? <LoadingScreen /> : null}
-      <div className="mt-10 ">
+      <div className="">
         <Swiper
           loop={true}
           spaceBetween={10}

@@ -3,10 +3,7 @@ import React, { useState } from "react";
 import { IoCallSharp, IoLocationSharp } from "react-icons/io5";
 import { IconContext } from "react-icons";
 import { MdEmail } from "react-icons/md";
-import { BsFacebook, BsTwitter, BsWhatsapp } from "react-icons/bs";
-import Link from "next/link";
-// import contactImg from "../../../public/contact-img.jpg";
-// import Image from "next/image";
+import { BsFacebook, BsWhatsapp } from "react-icons/bs";
 
 const ContactComp = () => {
   const [formData, setFormData] = useState({});
@@ -37,7 +34,7 @@ const ContactComp = () => {
 
   return (
     <div className="flex items-center justify-center w-full min-h-screen ">
-      <div className="flex flex-col w-full max-w-4xl p-8 space-x-6 overflow-hidden text-white shadow-lg bg-cyan-700 rounded-xl md:flex-row md:space-x-6 md:space-y-0 sm:p-12">
+      <div className="flex flex-col w-full max-w-4xl p-8 space-x-6 overflow-hidden text-white bg-black shadow-lg rounded-xl md:flex-row md:space-x-6 md:space-y-0 sm:p-12">
         <div className="flex flex-col justify-between space-y-8">
           <div>
             <h1 className="text-4xl tracking-wide font-sinha">

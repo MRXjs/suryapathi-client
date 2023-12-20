@@ -2,11 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-  font-family: "sinha";
-  src: url(../../public/font/sinha.ttf);
-}
-
 body {
   overflow-x: hidden;
+}
+
+@layer base {
+  .btn-red {
+    @apply inline-flex items-center justify-center mt-3 text-lg text-center text-white bg-red-500 rounded-md sm:py-3 sm:px-6 h-28 lg:h-auto hover:bg-red-700 sm:w-auto;
+  }
+  .btn-blue {
+    @apply inline-flex items-center justify-center mt-3 text-lg text-center text-white bg-blue-500 rounded-md sm:py-3 sm:px-6 hover:bg-blue-700 h-28 lg:h-auto sm:w-auto;
+  }
 }

@@ -2,13 +2,10 @@
 import React, { useEffect, useState } from "react";
 import { BsWhatsapp } from "react-icons/bs";
 import { useRouter } from "next/navigation";
-import Navbar from "./Navbar";
-import Footer from "./Footer";
 import { districts, gender, nameCategorys } from "@/db/selecterOptions";
 import { useForm } from "react-hook-form";
 import { formValidations } from "@/db/formValidations";
 import FormError from "./FormError";
-import { toastError } from "./toast";
 import { babyNameCreate } from "../api/babyName";
 import LoadingScreen from "./LoadingScreen";
 import Link from "next/link";
@@ -43,12 +40,8 @@ const BabyNameReqForm = () => {
   return (
     <>
       {isLoading ? <LoadingScreen /> : null}
-      <Navbar />
-      <div
-        className="flex items-center justify-center "
-        style={{ backgroundImage: "linear-gradient(115deg, #9F7AEA, #FEE2FE)" }}
-      >
-        <div className="m-2 mt-20 bg-white rounded-lg shadow-lg">
+      <div className="flex items-center justify-center ">
+        <div className="m-2 mt-20 mb-20 bg-white rounded-lg shadow-lg">
           <h1 className="my-4 text-3xl text-center ">පහත තොරතුරු ලබාදෙන්න</h1>
           <form className="p-5 mt-10 " onSubmit={handleSubmit(formHandler)}>
             <div className="mt-5">
@@ -321,17 +314,13 @@ const BabyNameReqForm = () => {
               <FormError error={errors.acceptPolicy.message} />
             ) : null}
             <div className="mt-5">
-              <button
-                className="w-full py-3 font-bold text-center text-white bg-purple-500 rounded-lg"
-                type="submit"
-              >
-                ඉදිරියට යන්න
+              <button className="w-full btn-blue" type="submit">
+                සේවාව ලබා ගන්න
               </button>
             </div>
           </form>
         </div>
       </div>
-      <Footer />
     </>
   );
 };

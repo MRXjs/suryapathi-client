@@ -4,15 +4,17 @@ import MemberGalleryCard from "./MemberGalleryCard";
 import ReactPaginate from "react-paginate";
 import MemberPopupModel from "./MemberPopupModel";
 import { gender, nation, age, professions } from "@/db/selecterOptions";
-import PackageChangePopupModel from "./PackageChangePopupModel";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import MemberGallerySubmitPopup from "./MemberGallerySubmitPopup";
 import { getAllMembers } from "../api/member";
 import { GrLinkPrevious, GrLinkNext } from "react-icons/gr";
 import LoadingScreen from "./LoadingScreen";
+import { useRouter } from "next/navigation";
 
 const MemberGallery = () => {
+  const router = useRouter();
+
   const [members, setMembers] = useState([]);
   let memberPerPage = 10;
   const [currentPage, setCurrentPage] = useState(0);
@@ -27,15 +29,11 @@ const MemberGallery = () => {
     filterJob: "",
   });
 
-  const [isStatusOn, setIsStatusOn] = useState(true);
   const [selectedCards, setSelectedCards] = useState([]);
-  const [selectedCardCount, setSelectedCardCount] = useState(0);
-  const [selectedPlanItem, setSelectedPlanItem] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
 
   const [popups, setPopups] = useState({
     openPopupModel: false,
-    openPackageChangePopup: false,
     openMemberGallerySubmit: false,
   });
 
@@ -75,10 +73,6 @@ const MemberGallery = () => {
   };
 
   const cardSelectHandler = (person) => {
-    setSelectedPlanItem(
-      JSON.parse(localStorage.getItem("selectedPricePlan")).item
-    );
-
     // Check if the person is already selected
     if (
       selectedCards.some((selectedPerson) => selectedPerson.id === person.id)
@@ -89,68 +83,34 @@ const MemberGallery = () => {
           (selectedPerson) => selectedPerson.id !== person.id
         )
       );
-
-      // Update the count of selected persons
-      setSelectedCardCount(selectedCards.length);
     } else {
       // If not selected, add it to the list
       setSelectedCards([...selectedCards, person]);
-
-      // Update the count of selected persons
-      setSelectedCardCount(selectedCards.length + 1);
     }
   };
 
-  useEffect(() => {
-    if (selectedPlanItem < selectedCards.length) {
-      toast(
-        "ඔබ තෝරාගත් package එක ප්‍රමානයට වඩා තෝරාගත නොහැක. ඔබට වැඩි ප්‍රමානයක් තොරාගැනිමට අවශ්‍ය නම් පැකෙජය මාරු කරන්න.✔✔",
-        {
-          type: "error",
-        }
-      );
-      setSelectedCards([]);
-      setSelectedCardCount(0);
-    }
-  }, [selectedCards, selectedCardCount, selectedPlanItem]);
-
-  // Define a function to check if a card is selected
+  //  check if a card is selected
   const isCardSelected = (id) =>
     selectedCards.some((selectedPerson) => selectedPerson.id === id);
 
-  const packageChangeHandler = () => {
-    setIsStatusOn(false);
-    setPopups((prevPopups) => ({
-      ...prevPopups,
-      openPackageChangePopup: true,
-    }));
-  };
-
+  // gallery submit
   const memberGallerySubmitHandler = () => {
-    if (
-      selectedCards.length ===
-      JSON.parse(localStorage.getItem("selectedPricePlan")).item
-    ) {
+    if (selectedCards.length !== 0) {
       setPopups((prevPopups) => ({
         ...prevPopups,
         openMemberGallerySubmit: true,
       }));
-
-      setIsStatusOn(false);
     } else {
-      toast(
-        "ඔබ තෝරාගත් පැකෙජයෙ ප්‍රමානයට වඩා අඩුවෙන් තෝරා ගත නොහැක. ඔබට වෙනත් ප්‍රමානයක් තෝරාගැනිමට අව්ශ්‍ය නම් පැකෙජය මාරු කරන්න.✔✔",
-        {
-          type: "error",
-        }
-      );
+      toast("ඔබ කිසිවෙකු තෝරාගෙන නැත", {
+        type: "error",
+      });
     }
   };
 
   return (
     <div className="min-h-screen ">
       {isLoading ? <LoadingScreen text={"මදක් රැදී සිටින්න"} /> : null}
-      <div className="flex flex-row mt-20 lg:mt-40 lg:mx-24 ">
+      <div className="flex flex-row mt-10 lg:mx-24 lg:mt-20 ">
         {/* card  & filter */}
         <div className="flex flex-col items-center justify-center w-full mb-5">
           <div className="">
@@ -159,7 +119,7 @@ const MemberGallery = () => {
               idudcslhka ,ehsia;=j
             </div>
           </div>
-          <div className="flex flex-col items-center justify-center sm:flex-row mx-36 bg-[#f9f9f9] px-24 md:px-36 py-10 rounded-lg">
+          <div className="flex flex-col items-center justify-center sm:flex-row mx-36 bg-[#f9f9f9] px-10 sm:px-24 md:px-36 sm:py-10 py-5 rounded-lg">
             <select
               className="p-2 mb-5 border-2 border-solid rounded-md w-44 sm:mb-0 sm:mx-5"
               value={filterValues.filterGender}
@@ -212,25 +172,8 @@ const MemberGallery = () => {
               ))}
             </select>
           </div>
-          {/* gallery status */}
-          {isStatusOn ? (
-            <div
-              className={`fixed z-50 opacity-75 top-36 p-3 right-8 bg-[#eee] duration-300 rounded-md`}
-            >
-              <div>
-                <div className="flex flex-col items-center text-4xl ">
-                  <span className="text-black rounded-full ">
-                    {selectedCardCount}
-                  </span>
-                  <div className="w-10 h-[1px] bg-black"></div>
-                  <span className="text-black rounded-full ">
-                    {selectedPlanItem}
-                  </span>
-                </div>
-              </div>
-            </div>
-          ) : null}
-          <div className="flex flex-wrap justify-center min-h-screen my-8 rounded-xl">
+
+          <div className="flex flex-wrap justify-center min-h-screen my-5 rounded-xl">
             {members.map((person, personIndex) => {
               return (
                 <div key={personIndex}>
@@ -245,18 +188,6 @@ const MemberGallery = () => {
               );
             })}
           </div>
-
-          {/* package change popup */}
-          <PackageChangePopupModel
-            open={popups.openPackageChangePopup}
-            onClose={() => {
-              setPopups((prevPopups) => ({
-                ...prevPopups,
-                openPackageChangePopup: false,
-              }));
-              setIsStatusOn(true);
-            }}
-          />
 
           {/* popup model */}
           <div className="">
@@ -291,19 +222,15 @@ const MemberGallery = () => {
               />
             </div>
           </div>
-          <div className="flex items-center justify-center gap-2 mx-5 ">
+          <div className="flex items-center justify-center gap-2 m-2 mt-10 mb-20 sm:gap-5">
             <button
-              type="button"
-              className="inline-flex items-center justify-center w-full px-6 py-3 mt-3 mb-2 text-lg text-center text-white bg-blue-500 rounded-md hover:bg-blue-700 h-28 lg:h-auto sm:w-auto sm:mb-0"
-              onClick={packageChangeHandler}
+              className="btn-blue"
+              onClick={() => router.push("/proposal/memberregistration")}
             >
-              පැකේජය මාරු කරන්න
+              අපගෙ වෙබ් පිටුවෙ ලියාපදින්චී වීමට
             </button>
-            <button
-              className="inline-flex items-center justify-center px-6 py-3 mt-3 mb-2 text-lg text-center text-white bg-red-500 rounded-md h-28 lg:h-auto hover:bg-red-700 sm:w-auto sm:mb-0"
-              onClick={memberGallerySubmitHandler}
-            >
-              {"තොරාගත් අයගෙ තොරතුරු ලබා ගන්න >>"}
+            <button className="btn-red" onClick={memberGallerySubmitHandler}>
+              {"තොරාගත් අයගෙ තොරතුරු ලබා ගන්න  "}
             </button>
           </div>
         </div>
@@ -315,8 +242,7 @@ const MemberGallery = () => {
           setPopups((prevPopups) => ({
             ...prevPopups,
             openMemberGallerySubmit: false,
-          })),
-            setIsStatusOn(true);
+          }));
         }}
       />
     </div>

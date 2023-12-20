@@ -1,3 +1,4 @@
+import localFont from "next/font/local";
 import Head from "next/head";
 import "./globals.css";
 import "react-toastify/dist/ReactToastify.css";
@@ -8,6 +9,12 @@ export const metadata = {
   title: "සුර්යාපති",
   description: "Astrology service",
 };
+
+const sinha = localFont({
+  src: "../../public/font/sinha.ttf",
+  display: "swap",
+  variable: "--font-sinha",
+});
 
 export default function RootLayout({ children }) {
   return (
@@ -48,7 +55,7 @@ export default function RootLayout({ children }) {
             gtag('config', 'G-Z26Y72B41T');`}
       </Script>
 
-      <body className="bg-stone-100">
+      <body className={`bg-stone-100 ${sinha.variable}`}>
         <ToastContainer
           position="top-center"
           autoClose={5000}

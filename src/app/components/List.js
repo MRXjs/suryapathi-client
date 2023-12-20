@@ -30,9 +30,7 @@ const List = ({ ListItems, listTitle }) => {
 
   return (
     <div className="h-full mt-16 lg:mx-20 lg:mt-20">
-      <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-center text-gray-700 md:text-5xl lg:text-6xl">
-        {listTitle}
-      </h1>
+      <h1 className="mb-10 text-6xl text-center font-sinha">{listTitle}</h1>
       <div className="flex flex-wrap justify-center">
         {ListItems.map((item, index) => (
           <div

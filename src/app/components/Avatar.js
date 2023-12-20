@@ -42,7 +42,6 @@ const Avatar = ({ editorRef, selectedAvatar }) => {
         </>
       ) : (
         <>
-          <span className="mt-3">පින්තූරයක් තෝරන්න</span>
           <Image
             alt="sample avatar"
             src={profileAvatar}

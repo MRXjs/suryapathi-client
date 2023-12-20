@@ -7,10 +7,8 @@ const page = () => {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen mt-28">
-        <h1 className="text-4xl lg:text-5xl font-semibold text-center text-[#646464] mb-10">
-          වීඩියෝ ගැලරිය
-        </h1>
+      <div className="min-h-screen mt-28 sm:mt-36">
+        <h1 className="mb-10 text-6xl text-center font-sinha">úäfhda .e,ßh</h1>
         <VideoGallery />
       </div>
       <Footer />

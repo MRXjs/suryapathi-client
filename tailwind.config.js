@@ -8,7 +8,7 @@ module.exports = {
   theme: {
     extend: {},
     fontFamily: {
-      sinha: ["sinha"],
+      sinha: ["var(--font-sinha)"],
     },
   },
   plugins: [],

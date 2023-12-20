@@ -19,7 +19,7 @@ const AstrologyPopupModel = ({ open, service, onClose }) => {
       {isLoading ? <LoadingScreen /> : null}
       {/*container */}
       <div
-        className="flex items-center justify-center flex-col w-screen md:w-[60%] lg:w-[50%] xl:w-[40%] h-full p-5 my-10 overflow-y-auto bg-white  "
+        className="flex items-center justify-center flex-col w-screen md:w-[60%] lg:w-[50%] xl:w-[40%] h-full p-5 my-10 overflow-y-auto bg-white"
         onClick={(e) => {
           e.stopPropagation();
         }}

@@ -1,13 +1,7 @@
 "use client";
 import Link from "next/link";
 import React from "react";
-import {
-  BsFacebook,
-  BsTwitter,
-  BsLinkedin,
-  BsInstagram,
-  BsWhatsapp,
-} from "react-icons/bs";
+import { BsFacebook, BsWhatsapp } from "react-icons/bs";
 import { IconContext } from "react-icons";
 
 const Footer = () => {
