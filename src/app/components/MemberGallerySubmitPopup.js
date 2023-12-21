@@ -5,8 +5,15 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { proposalCreate } from "../api/proposal";
 import LoadingScreen from "./LoadingScreen";
+import { IoCloseCircle } from "react-icons/io5";
+import { toastError } from "./toast";
 
-const MemberGallerySubmitPopup = ({ open, selectedMembers, onClose }) => {
+const MemberGallerySubmitPopup = ({
+  open,
+  selectedMembers,
+  removeSelectedCard,
+  onClose,
+}) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
@@ -41,8 +48,14 @@ const MemberGallerySubmitPopup = ({ open, selectedMembers, onClose }) => {
                 return (
                   <div
                     key={selectedMember.id}
-                    className="flex items-center justify-center p-2 shadow-xl cursor-pointer"
+                    className="relative flex items-center justify-center p-2 shadow-xl cursor-pointer"
                   >
+                    <div
+                      className="absolute right-0 top-1 animate-pulse"
+                      onClick={() => removeSelectedCard(selectedMember.id)}
+                    >
+                      <IoCloseCircle size={25} color="red" />
+                    </div>
                     <Image
                       src={selectedMember.profile_image_url}
                       alt="profile"
@@ -55,14 +68,18 @@ const MemberGallerySubmitPopup = ({ open, selectedMembers, onClose }) => {
               })}
             </div>
             <div className="mt-5 text-xl font-semibold text-center text-green-700">
-              අයකිරිම Rs {selectedMembers.length * 1000}
+              අයකිරිම Rs {selectedMembers.length * 500}
             </div>
             <div className="flex flex-col items-center justify-center gap-3 mb-5 ">
               <ReqContactForm
                 formSubmit={async (data) => {
-                  setIsLoading(true);
-                  await proposalCreate(selectedMembers, data, router);
-                  setIsLoading(false);
+                  if (selectedMembers.length !== 0) {
+                    setIsLoading(true);
+                    await proposalCreate(selectedMembers, data, router);
+                    setIsLoading(false);
+                  } else {
+                    toastError("ඔබ කිසිවෙකු තෝරාගෙන නැත");
+                  }
                 }}
               />
               <button

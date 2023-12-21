@@ -1,26 +1,22 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import MemberGalleryCard from "./MemberGalleryCard";
-import ReactPaginate from "react-paginate";
 import MemberPopupModel from "./MemberPopupModel";
 import { gender, nation, age, professions } from "@/db/selecterOptions";
-import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import MemberGallerySubmitPopup from "./MemberGallerySubmitPopup";
 import { getAllMembers } from "../api/member";
-import { GrLinkPrevious, GrLinkNext } from "react-icons/gr";
 import LoadingScreen from "./LoadingScreen";
 import { useRouter } from "next/navigation";
+import { toastError } from "./toast";
 
 const MemberGallery = () => {
   const router = useRouter();
 
   const [members, setMembers] = useState([]);
-  let memberPerPage = 10;
-  const [currentPage, setCurrentPage] = useState(0);
-  const [pageCount, setPageCount] = useState(0);
-
   const [currentPerson, setCurrentPerson] = useState({});
+
+  const [page, setPage] = useState(1);
 
   const [filterValues, setFilterValues] = useState({
     filterGender: "",
@@ -32,6 +28,8 @@ const MemberGallery = () => {
   const [selectedCards, setSelectedCards] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
+  const [showButtons, setShowButtons] = useState(false);
+
   const [popups, setPopups] = useState({
     openPopupModel: false,
     openMemberGallerySubmit: false,
@@ -42,8 +40,7 @@ const MemberGallery = () => {
     try {
       setIsLoading(true);
       const data = await getAllMembers(pg, filterValues);
-      setMembers(data.rows);
-      setPageCount(Math.ceil(data.count / memberPerPage));
+      setMembers((prev) => [...prev, ...data.rows]);
       setIsLoading(false);
     } catch (error) {
       return null;
@@ -52,15 +49,34 @@ const MemberGallery = () => {
 
   useEffect(() => {
     setMembers([]);
-    setCurrentPage(0);
     fetchData(1);
   }, [filterValues]);
 
-  // navigtaion change page
-  const changePage = ({ selected }) => {
-    setMembers([]);
-    setCurrentPage(selected);
-    fetchData(selected + 1);
+  // infinite scroll handler
+  useEffect(() => {
+    fetchData(page);
+  }, [page]);
+
+  let lastScrollTop = 0;
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const handleScroll = async (e) => {
+    const currentScroll =
+      window.pageYOffset || document.documentElement.scrollTop;
+
+    if (currentScroll > lastScrollTop) {
+      if (
+        window.innerHeight + document.documentElement.scrollTop + 1 >=
+        document.documentElement.scrollHeight
+      ) {
+        setIsLoading(true);
+        setPage((prev) => prev + 1);
+      }
+    }
+    lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
   };
 
   const filterHandleChange = (e) => {
@@ -78,20 +94,40 @@ const MemberGallery = () => {
       selectedCards.some((selectedPerson) => selectedPerson.id === person.id)
     ) {
       // If selected, remove it from the list
-      setSelectedCards(
-        selectedCards.filter(
-          (selectedPerson) => selectedPerson.id !== person.id
-        )
-      );
+      removeSelectedCard(person.id);
     } else {
       // If not selected, add it to the list
       setSelectedCards([...selectedCards, person]);
     }
   };
 
+  const removeSelectedCard = (id) => {
+    setSelectedCards(
+      selectedCards.filter((selectedPerson) => selectedPerson.id !== id)
+    );
+  };
+
   //  check if a card is selected
   const isCardSelected = (id) =>
     selectedCards.some((selectedPerson) => selectedPerson.id === id);
+
+  // when scroll memberGallery show btn
+  useEffect(() => {
+    const handleScroll = () => {
+      const memberSection = document.getElementById("memberGallerySection");
+      const bounding = memberSection.getBoundingClientRect();
+      const threshold = window.innerHeight * 0.8;
+      if (bounding.top < threshold && bounding.bottom >= 0) {
+        setShowButtons(true);
+      } else {
+        setShowButtons(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   // gallery submit
   const memberGallerySubmitHandler = () => {
@@ -101,9 +137,7 @@ const MemberGallery = () => {
         openMemberGallerySubmit: true,
       }));
     } else {
-      toast("ඔබ කිසිවෙකු තෝරාගෙන නැත", {
-        type: "error",
-      });
+      toastError("ඔබ කිසිවෙකු තෝරාගෙන නැත");
     }
   };
 
@@ -173,7 +207,10 @@ const MemberGallery = () => {
             </select>
           </div>
 
-          <div className="flex flex-wrap justify-center min-h-screen my-5 rounded-xl">
+          <section
+            id="memberGallerySection"
+            className="flex flex-wrap justify-center min-h-screen my-5 rounded-xl"
+          >
             {members.map((person, personIndex) => {
               return (
                 <div key={personIndex}>
@@ -187,7 +224,7 @@ const MemberGallery = () => {
                 </div>
               );
             })}
-          </div>
+          </section>
 
           {/* popup model */}
           <div className="">
@@ -201,35 +238,22 @@ const MemberGallery = () => {
                 }));
               }}
             />
-            {/* patination */}
-            <div>
-              <ReactPaginate
-                breakLabel="..."
-                nextLabel={<GrLinkNext size={20} />}
-                pageRangeDisplayed={2}
-                marginPagesDisplayed={1}
-                previousLabel={<GrLinkPrevious size={20} />}
-                pageCount={pageCount}
-                onPageChange={changePage}
-                containerClassName={"h-[50px] flex items-center "}
-                pageLinkClassName={
-                  "px-2 sm:px-5 py-1 sm:py-2  m-[8px] rounded-[5px] border-2 border-solid border-black hover:bg-black hover:text-white transition duration-300"
-                }
-                activeClassName={
-                  "bg-black text-white  py-3  m-[8px] rounded-[5px]"
-                }
-                forcePage={currentPage}
-              />
-            </div>
           </div>
-          <div className="flex items-center justify-center gap-2 m-2 mt-10 mb-20 sm:gap-5">
+          <div
+            className={`${
+              showButtons ? "fixed flex" : "hidden"
+            }  z-5 top-16  items-center justify-center gap-2 p-2`}
+          >
             <button
-              className="btn-blue"
+              className="h-16 text-sm btn-blue sm:text-lg"
               onClick={() => router.push("/proposal/memberregistration")}
             >
               අපගෙ වෙබ් පිටුවෙ ලියාපදින්චී වීමට
             </button>
-            <button className="btn-red" onClick={memberGallerySubmitHandler}>
+            <button
+              className="h-16 py-1 text-sm sm:text-lg btn-red animate-pulse"
+              onClick={memberGallerySubmitHandler}
+            >
               {"තොරාගත් අයගෙ තොරතුරු ලබා ගන්න  "}
             </button>
           </div>
@@ -238,6 +262,7 @@ const MemberGallery = () => {
       <MemberGallerySubmitPopup
         open={popups.openMemberGallerySubmit}
         selectedMembers={selectedCards}
+        removeSelectedCard={removeSelectedCard}
         onClose={() => {
           setPopups((prevPopups) => ({
             ...prevPopups,

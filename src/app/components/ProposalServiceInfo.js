@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import RedirectToAstroService from "./RedirectToAstroService";
 
 const ProposalServiceInfo = () => {
   return (
@@ -28,6 +29,12 @@ const ProposalServiceInfo = () => {
       <div className="p-2 m-2 mt-5 text-lg text-center text-black bg-[#cfcfcfee] rounded-lg lg:mx-36 lg:text-xl">
         ඔබ මා කෙරෙහි තබන විශ්වාසය එලෙසින්ම ආරක්ෂාකර ඔබට ඉහල සේවයක් සැපයමින් සතුට
         පිරුණු කැදැල්ලක් දැකිම මාගේ අරමුණයි.  ඔබට ජය වේවා..
+      </div>
+      <div className="flex items-center justify-center mt-10 mb-20">
+        <RedirectToAstroService
+          btnText={"ඔබට පොරොන්දන් ගැලපීම අවශ්‍ය නම්"}
+          serviceIndex={1}
+        />
       </div>
     </div>
   );
